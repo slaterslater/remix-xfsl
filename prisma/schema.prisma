@@ -9,3 +9,35 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Team {
+  id         String @id @default(uuid())
+  name       String @unique
+  homeGames  Game[] @relation(name: "homeTeam")
+  awayGames  Game[] @relation(name: "awayTeam")
+  bringBases Week[] @relation(name: "bringBase")
+  takeBases  Week[] @relation(name: "takeBase")
+}
+
+model Week {
+  id            String  @id @default(uuid())
+  date          String
+  title         String
+  bringBaseId   String?
+  bringBaseTeam Team?   @relation(fields: [bringBaseId], references: [id], name: "bringBase")
+  takeBaseId    String?
+  takeBaseTeam  Team?   @relation(fields: [takeBaseId], references: [id], name: "takeBase")
+  games         Game[]
+}
+
+model Game {
+  id         String @id @default(uuid())
+  time       String
+  weekId     String
+  week       Week   @relation(fields: [weekId], references: [id])
+  homeTeamId String
+  homeTeam   Team   @relation(fields: [homeTeamId], references: [id], name: "homeTeam")
+  awayTeamId String
+  awayTeam   Team   @relation(fields: [awayTeamId], references: [id], name: "awayTeam")
+  winner     String
+}

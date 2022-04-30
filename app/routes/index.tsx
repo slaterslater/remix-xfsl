@@ -35,10 +35,5 @@ import { db } from '~/utils/db.server'
 export default function Index() {
   // const data = useLoaderData<LoaderData>()
   // console.log({ data })
-  return (
-    <>
-      <h1>XFSL</h1>
-      <p>homepage</p>
-    </>
-  )
+  return <p>homepage</p>
 }

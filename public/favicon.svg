@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400" height="200" viewBox="0 0 400 200">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #041e42;
+        stroke: #fff;
+      }
+
+      .cls-1, .cls-4 {
+        stroke-width: 1px;
+      }
+
+      .cls-2, .cls-3 {
+        fill: #fff;
+      }
+
+      .cls-2 {
+        fill-rule: evenodd;
+      }
+
+      .cls-3 {
+        font-size: 27.355px;
+        font-family: "Arial Rounded MT Bold";
+      }
+
+      .cls-4 {
+        fill: #e5bf2e;
+        stroke: #000;
+      }
+    </style>
+  </defs>
+  <rect id="Rounded_Rectangle_2" data-name="Rounded Rectangle 2" class="cls-1" width="400" height="200" rx="32.5" ry="32.5"/>
+  <image id="RED" x="279" width="121" height="200" xlink:href="data:img/png;base64,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"/>
+  <path class="cls-2" d="M323.059-45.02l21.93,11.445L211.872,225.005l-21.93-11.445Z"/>
+  <path id="Shape_1_copy" data-name="Shape 1 copy" class="cls-2" d="M211.941-35.02l-21.93,11.445,133.117,258.58,21.93-11.445Z"/>
+  <text id="Lorem_Ipsum" data-name="Lorem Ipsum" class="cls-3" transform="translate(604.896 278.938) scale(5)">Lorem Ipsum</text>
+  <ellipse class="cls-4" cx="95" cy="92.5" rx="25" ry="22.5"/>
+</svg>

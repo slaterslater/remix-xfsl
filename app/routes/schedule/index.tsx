@@ -1,10 +1,11 @@
 import type { LoaderFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { LiveReload, useLoaderData } from '@remix-run/react'
+import { useLoaderData } from '@remix-run/react'
 import type { Week, Game } from '@prisma/client'
 
 import { db } from '~/utils/db.server'
 import dayjs from 'dayjs'
+import GameTable from '~/components/GameTable'
 
 // type LoaderData = { weeks: Array<Week> &  }
 
@@ -32,38 +33,27 @@ export const loader: LoaderFunction = async () => {
 
 export default function Index() {
   const data = useLoaderData<LoaderData>()
-  console.log({ data })
   return (
-    <>
-      <LiveReload />
+    <main>
       <h2>XFSL Season 2022</h2>
       {data.weeks.map((week) => {
-        const { id, date, games } = week
+        const { id, date, title, games } = week
+        const gameDay = dayjs(date).format('MMMM D')
         return (
           <div key={id} id={id}>
-            {/* <h3>{dayjs(week.datetime).format("MMMM D")}</h3> */}
-            <h3>{dayjs(date).format('MMMM D')}</h3>
-            <table>
-              <thead>
-                <tr>
-                  <th className="offsceen">Time</th>
-                  <th style={{ minWidth: '115px' }}>Away</th>
-                  <th style={{ minWidth: '115px' }}>Home</th>
-                </tr>
-              </thead>
-              <tbody>
-                {games?.map((game: Game) => (
-                  <tr key={game.id}>
-                    <td className="th">{dayjs(game.time).format('hmm')}</td>
-                    <td className={game.awayTeam.name}>{game.awayTeam.name}</td>
-                    <td className={game.homeTeam.name}>{game.homeTeam.name}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            {games.length ? (
+              <GameTable title={gameDay} games={games} />
+            ) : (
+              <>
+                <h3>{gameDay}</h3>
+                <div className="schedule-placeholder">
+                  <p>{title}</p>
+                </div>
+              </>
+            )}
           </div>
         )
       })}
-    </>
+    </main>
   )
 }

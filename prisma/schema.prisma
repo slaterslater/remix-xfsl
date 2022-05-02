@@ -20,24 +20,24 @@ model Team {
 }
 
 model Week {
-  id            String  @id @default(uuid())
-  date          String
+  id            String   @id @default(uuid())
+  date          DateTime
   title         String
   bringBaseId   String?
-  bringBaseTeam Team?   @relation(fields: [bringBaseId], references: [id], name: "bringBase")
+  bringBaseTeam Team?    @relation(fields: [bringBaseId], references: [id], name: "bringBase")
   takeBaseId    String?
-  takeBaseTeam  Team?   @relation(fields: [takeBaseId], references: [id], name: "takeBase")
+  takeBaseTeam  Team?    @relation(fields: [takeBaseId], references: [id], name: "takeBase")
   games         Game[]
 }
 
 model Game {
-  id         String @id @default(uuid())
-  time       String
+  id         String   @id @default(uuid())
+  time       DateTime
   weekId     String
-  week       Week   @relation(fields: [weekId], references: [id])
-  homeTeamId String
-  homeTeam   Team   @relation(fields: [homeTeamId], references: [id], name: "homeTeam")
-  awayTeamId String
-  awayTeam   Team   @relation(fields: [awayTeamId], references: [id], name: "awayTeam")
+  week       Week     @relation(fields: [weekId], references: [id])
+  homeTeamId String?
+  homeTeam   Team?    @relation(fields: [homeTeamId], references: [id], name: "homeTeam")
+  awayTeamId String?
+  awayTeam   Team?    @relation(fields: [awayTeamId], references: [id], name: "awayTeam")
   winner     String
 }

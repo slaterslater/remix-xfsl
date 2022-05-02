@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import { useEffect, useRef } from 'react'
 
 type Props = {
-  title: string
+  title: string | undefined
   games: Array<Game>
 }
 

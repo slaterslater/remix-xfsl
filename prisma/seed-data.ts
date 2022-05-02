@@ -10,129 +10,29 @@ export const teams: Array<{ name: string }> = [
 export const weeks: Array<{
   date: string
   title: string
-  teamBringsBases: string | undefined
-  teamTakesBases: string | undefined
+  teamBringsBases: string | null
+  teamTakesBases: string | null
 }> = [
-  {
-    date: '2022-05-19',
-    title: 'week 1',
-    teamBringsBases: 'NV',
-    teamTakesBases: 'Aces',
-  },
-  {
-    date: '2022-05-26',
-    title: 'week 2',
-    teamBringsBases: 'Aces',
-    teamTakesBases: 'Gastons',
-  },
-  {
-    date: '2022-06-02',
-    title: 'week 3',
-    teamBringsBases: 'Gastons',
-    teamTakesBases: 'TBW',
-  },
-  {
-    date: '2022-06-09',
-    title: 'week 4',
-    teamBringsBases: 'TBW',
-    teamTakesBases: 'Aces',
-  },
-  {
-    date: '2022-06-16',
-    title: 'week 5',
-    teamBringsBases: 'Aces',
-    teamTakesBases: 'NV',
-  },
-  {
-    date: '2022-06-23',
-    title: 'week 6',
-    teamBringsBases: 'NV',
-    teamTakesBases: 'Critts',
-  },
-  {
-    date: '2022-06-30',
-    title: 'week 7',
-    teamBringsBases: 'Critts',
-    teamTakesBases: 'NV',
-  },
-  {
-    date: '2022-07-07',
-    title: 'week 8',
-    teamBringsBases: 'NV',
-    teamTakesBases: 'Critts',
-  },
-  {
-    date: '2022-07-14',
-    title: 'week 9',
-    teamBringsBases: 'Critts',
-    teamTakesBases: 'TBW',
-  },
-  {
-    date: '2022-07-21',
-    title: 'week 10',
-    teamBringsBases: 'TBW',
-    teamTakesBases: 'Lemons',
-  },
-  {
-    date: '2022-07-28',
-    title: 'week 11',
-    teamBringsBases: 'Lemons',
-    teamTakesBases: 'Critts',
-  },
-  {
-    date: '2022-08-04',
-    title: 'week 12',
-    teamBringsBases: 'Critts',
-    teamTakesBases: 'Lemons',
-  },
-  {
-    date: '2022-08-11',
-    title: 'week 13',
-    teamBringsBases: 'Lemons',
-    teamTakesBases: 'Gastons',
-  },
-  {
-    date: '2022-08-18',
-    title: 'week 14',
-    teamBringsBases: 'Gastons',
-    teamTakesBases: 'TBW',
-  },
-  {
-    date: '2022-08-25',
-    title: 'week 15',
-    teamBringsBases: 'TBW',
-    teamTakesBases: 'Lemons',
-  },
-  {
-    date: '2022-09-01',
-    title: 'week 16',
-    teamBringsBases: 'Lemons',
-    teamTakesBases: 'Aces',
-  },
-  {
-    date: '2022-09-08',
-    title: 'makeup',
-    teamBringsBases: undefined,
-    teamTakesBases: undefined,
-  },
-  {
-    date: '2022-09-15',
-    title: 'quarterfinals',
-    teamBringsBases: undefined,
-    teamTakesBases: undefined,
-  },
-  {
-    date: '2022-09-22',
-    title: 'semifinals',
-    teamBringsBases: undefined,
-    teamTakesBases: undefined,
-  },
-  {
-    date: '2022-09-29',
-    title: 'finals',
-    teamBringsBases: undefined,
-    teamTakesBases: undefined,
-  },
+  { date: '2022-05-19T04:00:00.000Z', title: 'week 1', teamBringsBases: 'NV', teamTakesBases: 'Aces' },
+  { date: '2022-05-26T04:00:00.000Z', title: 'week 2', teamBringsBases: 'Aces', teamTakesBases: 'Gastons' },
+  { date: '2022-06-02T04:00:00.000Z', title: 'week 3', teamBringsBases: 'Gastons', teamTakesBases: 'TBW' },
+  { date: '2022-06-09T04:00:00.000Z', title: 'week 4', teamBringsBases: 'TBW', teamTakesBases: 'Aces' },
+  { date: '2022-06-16T04:00:00.000Z', title: 'week 5', teamBringsBases: 'Aces', teamTakesBases: 'NV' },
+  { date: '2022-06-23T04:00:00.000Z', title: 'week 6', teamBringsBases: 'NV', teamTakesBases: 'Critts' },
+  { date: '2022-06-30T04:00:00.000Z', title: 'week 7', teamBringsBases: 'Critts', teamTakesBases: 'NV' },
+  { date: '2022-07-07T04:00:00.000Z', title: 'week 8', teamBringsBases: 'NV', teamTakesBases: 'Critts' },
+  { date: '2022-07-14T04:00:00.000Z', title: 'week 9', teamBringsBases: 'Critts', teamTakesBases: 'TBW' },
+  { date: '2022-07-21T04:00:00.000Z', title: 'week 10', teamBringsBases: 'TBW', teamTakesBases: 'Lemons' },
+  { date: '2022-07-28T04:00:00.000Z', title: 'week 11', teamBringsBases: 'Lemons', teamTakesBases: 'Critts' },
+  { date: '2022-08-04T04:00:00.000Z', title: 'week 12', teamBringsBases: 'Critts', teamTakesBases: 'Lemons' },
+  { date: '2022-08-11T04:00:00.000Z', title: 'week 13', teamBringsBases: 'Lemons', teamTakesBases: 'Gastons' },
+  { date: '2022-08-18T04:00:00.000Z', title: 'week 14', teamBringsBases: 'Gastons', teamTakesBases: 'TBW' },
+  { date: '2022-08-25T04:00:00.000Z', title: 'week 15', teamBringsBases: 'TBW', teamTakesBases: 'Lemons' },
+  { date: '2022-09-01T04:00:00.000Z', title: 'week 16', teamBringsBases: 'Lemons', teamTakesBases: 'Aces' },
+  { date: '2022-09-08T04:00:00.000Z', title: 'makeup games', teamBringsBases: null, teamTakesBases: null },
+  { date: '2022-09-15T04:00:00.000Z', title: 'quarterfinals', teamBringsBases: null, teamTakesBases: null },
+  { date: '2022-09-22T04:00:00.000Z', title: 'semifinals', teamBringsBases: null, teamTakesBases: null },
+  { date: '2022-09-29T04:00:00.000Z', title: 'finals', teamBringsBases: null, teamTakesBases: null },
 ]
 
 export const games = [

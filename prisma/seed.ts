@@ -13,13 +13,13 @@ async function seed() {
   const newTeams = await db.team.findMany()
 
   await Promise.all(
-    weeks.for((week) => {
+    weeks.map((week) => {
       const { title, date, teamBringsBases, teamTakesBases } = week
       const bringBaseId = newTeams.find(({ name }) => name === teamBringsBases)?.id
       const takeBaseId = newTeams.find(({ name }) => name === teamTakesBases)?.id
       const weekData: Week = {
         title,
-        date,
+        date: new Date(date),
         bringBaseId,
         takeBaseId,
       }
@@ -36,7 +36,7 @@ async function seed() {
       const awayTeamId = newTeams.find(({ name }) => name === away)?.id
       const homeTeamId = newTeams.find(({ name }) => name === home)?.id
       const gameData: Game = {
-        time,
+        time: new Date(time),
         weekId,
         awayTeamId,
         homeTeamId,

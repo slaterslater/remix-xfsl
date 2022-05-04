@@ -1,54 +1,105 @@
 import type { Team } from '@prisma/client'
-// import { teams } from 'prisma/seed-data'
 import { useMemo } from 'react'
 
 type Props = {
+  teams: Array<Team>
   games: Array<{ awayTeam: Team | null; homeTeam: Team | null; winner: string }>
 }
 
-// type Played = { awayTeam: Team | null; homeTeam: Team | null; winner: string }
+type TeamData =
+  | {
+      gp: number
+      wins: never[]
+      loss: never[]
+      ties: never[]
+      pts: number
+      id: string
+      name: string
+    }
+  | undefined
 
-export default function Standings({ games }: Props) {
-  const standings = useMemo(
-    () =>
-      games
-        .reduce((teamData, game) => {
-          if (!['away', 'home', 'tie'].includes(game.winner)) return teamData
-          // find team in teamData or init new rank
-          const [away, home] = Array.from([game.awayTeam, game.homeTeam]).map((team) => {
-            const i = teamData.indexOf(teamData.find(({ name }) => name === team.name))
-            if (i === -1) {
-              teamData.push({
-                ...team,
-                gp: 0,
-                wins: 0,
-                loss: 0,
-                ties: 0,
-                pts: 0,
-              })
-            }
-            return teamData.splice(i, 1).pop()
-          })
-          // update stats for each team
-          const { winner } = game
-          if (winner !== 'tie') {
-            const [winningTeam, losingTeam] = winner === 'home' ? [home, away] : [away, home]
-            winningTeam.wins += 1
-            losingTeam.loss += 1
+export default function Standings({ teams, games }: Props) {
+  const standings = useMemo(() => {
+    const standingsInit = teams.map((team) => ({
+      ...team,
+      gp: 0,
+      wins: [],
+      loss: [],
+      ties: [],
+      pts: 0,
+      rank: null,
+    }))
+
+    const teamsWithGameResults = games
+      .reduce((teamData, game) => {
+        if (!['away', 'home', 'tie'].includes(game.winner)) return teamData
+
+        const [awayTeam, homeTeam] = Array.from([game.awayTeam, game.homeTeam]).map((team) => {
+          const i = teamData.indexOf(teamData.find(({ name }) => name === team.name))
+          return teamData.splice(i, 1).pop()
+        })
+
+        let awayResult
+        let homeResult
+        switch (game.winner) {
+          case 'away':
+            awayResult = 'wins'
+            homeResult = 'loss'
+            break
+          case 'home':
+            awayResult = 'loss'
+            homeResult = 'wins'
+            break
+          default:
+            awayResult = 'ties'
+            homeResult = 'ties'
+        }
+
+        const updateStats = (team, result, opponent) => {
+          team[result].push(opponent.name)
+          team.gp += 1
+          team.pts = 2 * team.wins.length + team.ties.length
+          teamData.push(team)
+        }
+
+        updateStats(awayTeam, awayResult, homeTeam)
+        updateStats(homeTeam, homeResult, awayTeam)
+
+        return teamData
+      }, standingsInit)
+      .sort((a, b) => {
+        if (a.pts === b.pts) {
+          const tiebreaker = (team, opponent) => team.wins.filter((loser) => loser === opponent.name).length
+          const tiebreakerA = tiebreaker(a, b)
+          const tiebreakerB = tiebreaker(b, a)
+          if (tiebreakerB === tiebreakerA) {
+            const sharedRank = `${a.pts}-${tiebreakerB}`
+            a.rank = sharedRank
+            b.rank = sharedRank
+            console.log(a.name, a.rank, b.name, b.rank)
           }
-          Array.from([away, home]).forEach((team) => {
-            team.gp += 1
-            team.ties += winner === 'tie' ? 1 : 0
-            team.pts = 2 * team.wins + team.ties
-          })
-          teamData.push(away, home)
-          return teamData
-        }, [])
-        .sort((a, b) => b.pts - a.pts),
-    [games],
-  )
+          return tiebreakerB - tiebreakerA
+        }
+        return b.pts - a.pts
+      })
 
-  console.log({ standings })
+    let rank = 0
+    let sharedRank = null
+
+    return teamsWithGameResults.map((team) => {
+      console.log(rank, sharedRank)
+      if (team.rank) {
+        if (sharedRank == null) sharedRank = rank
+        team.rank = sharedRank
+        console.log(team.name, team.rank)
+      } else {
+        sharedRank = null
+        team.rank = rank
+      }
+      rank += 1
+      return team
+    })
+  }, [games])
 
   return (
     <table>
@@ -79,19 +130,19 @@ export default function Standings({ games }: Props) {
       </thead>
       <tbody>
         {standings.map((team, i) => {
-          const { id, name, gp, wins, loss, ties, pts } = team
-          const rank = ['st', 'nd', 'rd']
+          const { id, name, gp, wins, loss, ties, pts, rank } = team
+          const suffix = ['st', 'nd', 'rd']
           return (
             <tr className={name.toLowerCase()} key={id}>
               <td className="th">
-                {i + 1}
-                <sup>{rank[i] || 'th'}</sup>
+                {rank + 1}
+                <sup>{suffix[rank] || 'th'}</sup>
               </td>
               <td>{name}</td>
               <td>{gp}</td>
-              <td>{wins}</td>
-              <td>{loss}</td>
-              <td>{ties}</td>
+              <td>{wins.length}</td>
+              <td>{loss.length}</td>
+              <td>{ties.length}</td>
               <td>{pts}</td>
             </tr>
           )

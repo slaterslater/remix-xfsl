@@ -9,6 +9,7 @@ import GameTable from '~/components/GameTable'
 import Standings from '~/components/Standings'
 
 type LoaderData = {
+  teams: Array<Team>
   week: Week | null
   playedGames: Array<{ awayTeam: Team | null; homeTeam: Team | null; winner: string }>
 }
@@ -17,9 +18,10 @@ type LoaderData = {
 // determine standing
 
 export const loader: LoaderFunction = async () => {
-  const today = dayjs('2022-06-22').day(4).toISOString()
+  const today = dayjs().day(4).toISOString()
   const seasonEnd = dayjs('2022-09-08').toISOString()
   const data: LoaderData = {
+    teams: await db.team.findMany(),
     week: await db.week.findFirst({
       where: {
         date: {
@@ -68,14 +70,14 @@ export const loader: LoaderFunction = async () => {
 
 export default function Index() {
   const data = useLoaderData<LoaderData>()
-  const { week, playedGames } = data
+  const { teams, week, playedGames } = data
   // console.log({ data })
   return (
     <main>
       <h2>{dayjs(data.week?.date).format('MMMM D')}</h2>
       <GameTable title={week?.title} games={week?.games} />
       <h3>XFSL Standings</h3>
-      <Standings games={playedGames} />
+      <Standings teams={teams} games={playedGames} />
     </main>
   )
 }

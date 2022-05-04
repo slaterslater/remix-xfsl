@@ -71,7 +71,6 @@ export const loader: LoaderFunction = async () => {
 export default function Index() {
   const data = useLoaderData<LoaderData>()
   const { teams, week, playedGames } = data
-  // console.log({ data })
   return (
     <main>
       <h2>{dayjs(data.week?.date).format('MMMM D')}</h2>

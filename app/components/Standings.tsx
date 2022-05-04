@@ -76,7 +76,6 @@ export default function Standings({ teams, games }: Props) {
             const sharedRank = `${a.pts}-${tiebreakerB}`
             a.rank = sharedRank
             b.rank = sharedRank
-            console.log(a.name, a.rank, b.name, b.rank)
           }
           return tiebreakerB - tiebreakerA
         }
@@ -87,11 +86,9 @@ export default function Standings({ teams, games }: Props) {
     let sharedRank = null
 
     return teamsWithGameResults.map((team) => {
-      console.log(rank, sharedRank)
       if (team.rank) {
         if (sharedRank == null) sharedRank = rank
         team.rank = sharedRank
-        console.log(team.name, team.rank)
       } else {
         sharedRank = null
         team.rank = rank

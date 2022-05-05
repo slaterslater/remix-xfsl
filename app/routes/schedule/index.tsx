@@ -41,8 +41,8 @@ export default function Index() {
   return (
     <main>
       <h2>XFSL Season 2022</h2>
-      {data.weeks.map((week) => (
-        <GameTable key={week.id} week={week} />
+      {data.weeks.map((week, i) => (
+        <GameTable key={week.id} week={week} index={i} />
       ))}
     </main>
   )

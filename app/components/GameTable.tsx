@@ -11,11 +11,8 @@ type Props = {
 }
 
 export default function GameTable({ week, index = 0 }: Props) {
-  if (!week) return <></>
-  const { id: weekId, title, date, games, bringBaseId, takeBaseId } = week
-  const gameDay = dayjs(date).format('MMMM D')
   const weekRef = useRef<HTMLHeadingElement>(null)
-  const isGame = !!games.length
+  const gameDay = dayjs(week?.date).format('MMMM D')
 
   useEffect(() => {
     const thisWeek = dayjs().day(4).format('MMMM D')
@@ -23,10 +20,13 @@ export default function GameTable({ week, index = 0 }: Props) {
     weekRef.current.scrollIntoView()
   }, [gameDay])
 
+  const { id: weekId, title, games, bringBaseId, takeBaseId } = week
+  const isGame = !!games.length
+
   return (
     <>
       <h3 id={weekId} ref={weekRef}>
-        {isGame ? title : gameDay}
+        {gameDay}
       </h3>
       {isGame && (
         <table>

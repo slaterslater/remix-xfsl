@@ -1,21 +1,20 @@
 import type { LoaderFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
-import type { Week, Game, Team } from '@prisma/client'
+import type { Week, Team } from '@prisma/client'
 
 import { db } from '~/utils/db.server'
 import dayjs from 'dayjs'
 import GameTable from '~/components/GameTable'
 import Standings from '~/components/Standings'
 
+type Game = { awayTeam: Team | null; homeTeam: Team | null; time: Date; id: string }
+
 type LoaderData = {
   teams: Array<Team>
-  week: Week | null
+  week: (Week & { games: Game[] }) | null
   playedGames: Array<{ awayTeam: Team | null; homeTeam: Team | null; winner: string }>
 }
-
-// get games with winner not empty
-// determine standing
 
 export const loader: LoaderFunction = async () => {
   const today = dayjs().day(4).toISOString()
@@ -29,8 +28,6 @@ export const loader: LoaderFunction = async () => {
         },
       },
       include: {
-        bringBaseTeam: true,
-        takeBaseTeam: true,
         games: {
           orderBy: {
             time: 'asc',
@@ -68,13 +65,13 @@ export const loader: LoaderFunction = async () => {
   return json(data)
 }
 
-export default function Index() {
+export default function IndexRoute() {
   const data = useLoaderData<LoaderData>()
   const { teams, week, playedGames } = data
   return (
     <main>
       <h2>{dayjs(data.week?.date).format('MMMM D')}</h2>
-      <GameTable title={week?.title} games={week?.games} />
+      {week && <GameTable week={week} index={0} />}
       <h3>XFSL Standings</h3>
       <Standings teams={teams} games={playedGames} />
     </main>

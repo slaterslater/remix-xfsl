@@ -6,17 +6,17 @@ type Props = {
   games: Array<{ awayTeam: Team | null; homeTeam: Team | null; winner: string }>
 }
 
-type TeamData =
-  | {
-      gp: number
-      wins: never[]
-      loss: never[]
-      ties: never[]
-      pts: number
-      id: string
-      name: string
-    }
-  | undefined
+// type TeamData =
+//   | {
+//       gp: number
+//       wins: never[]
+//       loss: never[]
+//       ties: never[]
+//       pts: number
+//       id: string
+//       name: string
+//     }
+//   | undefined
 
 export default function Standings({ teams, games }: Props) {
   const standings = useMemo(() => {
@@ -27,7 +27,7 @@ export default function Standings({ teams, games }: Props) {
       loss: [],
       ties: [],
       pts: 0,
-      rank: null,
+      rank: '',
     }))
 
     const teamsWithGameResults = games
@@ -96,7 +96,7 @@ export default function Standings({ teams, games }: Props) {
       rank += 1
       return team
     })
-  }, [games])
+  }, [teams, games])
 
   return (
     <table>

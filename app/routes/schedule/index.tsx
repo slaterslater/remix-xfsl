@@ -36,7 +36,7 @@ export const loader: LoaderFunction = async () => {
   return json(data)
 }
 
-export default function Index() {
+export default function ScheduleIndexRoute() {
   const data = useLoaderData<LoaderData>()
   return (
     <main>

@@ -474,6 +474,7 @@ caption {
   caption-side:bottom;
   text-align: right;
   font-size: 0.85rem;
+  height:0;
 }
 
 div[title] {

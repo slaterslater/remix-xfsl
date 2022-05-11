@@ -15,6 +15,7 @@
   --darkgrey: #666666;
   --font-body: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
   --font-display: graduate, var(--font-body);
+  --color-border: var(--darkgrey)
 }
 
 .aces {

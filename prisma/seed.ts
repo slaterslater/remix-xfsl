@@ -6,8 +6,13 @@ import type { Week, Game } from '@prisma/client'
 import { teams, weeks, games } from './seed-data'
 
 const db = new PrismaClient()
+const { USERNAME, PASSWORD } = process.env
 
 async function seed() {
+  await db.user.create({
+    data: { username: USERNAME, passwordHash: PASSWORD },
+  })
+
   await Promise.all(teams.map((team) => db.team.create({ data: team })))
 
   const newTeams = await db.team.findMany()

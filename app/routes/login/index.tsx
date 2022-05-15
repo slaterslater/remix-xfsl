@@ -1,7 +1,7 @@
 import type { ActionFunction, LinksFunction } from '@remix-run/node'
+import { redirect, json } from '@remix-run/node'
 import { Form, useActionData } from '@remix-run/react'
-import { json } from '@remix-run/node'
-import { login } from '~/utils/session.server'
+import { createUserSession, login } from '~/utils/session.server'
 
 import loginStyles from '~/styles/login.css'
 
@@ -51,15 +51,15 @@ export const action: ActionFunction = async ({ request }) => {
   }
   if (Object.values(fieldErrors).some(Boolean)) return badRequest({ fieldErrors, fields })
 
-  const user = null
-  // const user = await login({ username, password })
-  // console.log({ user })
+  // const user = null
+  const user = await login({ username, password })
   if (!user) {
     return badRequest({
       fields,
       formError: `Username/Password combination is incorrect`,
     })
   }
+  return createUserSession(user.id)
 }
 
 export default function Login() {

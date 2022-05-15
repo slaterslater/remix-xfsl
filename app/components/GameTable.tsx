@@ -7,10 +7,11 @@ type Game = { awayTeam: Team | null; homeTeam: Team | null; time: Date; id: stri
 
 type Props = {
   week: Week & { games: Game[] }
-  index: number
+  index?: number
+  isHomePage?: boolean
 }
 
-export default function GameTable({ week, index = 0 }: Props) {
+export default function GameTable({ week, index = 0, isHomePage = false }: Props) {
   const weekRef = useRef<HTMLHeadingElement>(null)
   const gameDay = dayjs(week?.date).format('MMMM D')
 
@@ -26,7 +27,7 @@ export default function GameTable({ week, index = 0 }: Props) {
   return (
     <>
       <h3 id={weekId} ref={weekRef}>
-        {gameDay}
+        {isHomePage ? title : gameDay}
       </h3>
       {isGame && (
         <table>

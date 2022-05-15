@@ -17,7 +17,7 @@ type LoaderData = {
 }
 
 export const loader: LoaderFunction = async () => {
-  const today = dayjs().day(4).toISOString()
+  const today = dayjs().day(4).hour(0).minute(0).second(0).millisecond(0).toISOString()
   const seasonEnd = dayjs('2022-09-08').toISOString()
   const data: LoaderData = {
     teams: await db.team.findMany(),
@@ -71,7 +71,7 @@ export default function IndexRoute() {
   return (
     <main>
       <h2>{dayjs(data.week?.date).format('MMMM D')}</h2>
-      {week && <GameTable week={week} index={0} />}
+      {week && <GameTable week={week} isHomePage />}
       <h3>XFSL Standings</h3>
       <Standings teams={teams} games={playedGames} />
     </main>

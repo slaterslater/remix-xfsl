@@ -16,15 +16,17 @@ type LoaderData = {
   playedGames: Array<{ awayTeam: Team | null; homeTeam: Team | null; winner: string }>
 }
 
+const today = dayjs().day(4).hour(0).minute(0).second(0).millisecond(0).toISOString()
+
 export const loader: LoaderFunction = async () => {
-  const today = dayjs().day(4).hour(0).minute(0).second(0).millisecond(0).toISOString()
   const seasonEnd = dayjs('2022-09-08').toISOString()
   const data: LoaderData = {
     teams: await db.team.findMany(),
     week: await db.week.findFirst({
       where: {
         date: {
-          equals: today,
+          // equals: today,
+          equals: dayjs().toISOString(),
         },
       },
       include: {
@@ -68,6 +70,7 @@ export const loader: LoaderFunction = async () => {
 export default function IndexRoute() {
   const data = useLoaderData<LoaderData>()
   const { teams, week, playedGames } = data
+  console.log(`this thursday is ${dayjs(today).format('MMMM D')}`)
   return (
     <main>
       <h2>{dayjs(data.week?.date).format('MMMM D')}</h2>

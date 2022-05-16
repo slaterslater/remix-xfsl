@@ -18,13 +18,18 @@ type LoaderData = {
 
 export const loader: LoaderFunction = async () => {
   const seasonEnd = dayjs('2022-09-08').toISOString()
-  const today = dayjs().day(4).hour(0).minute(0).second(0).millisecond(0).toISOString()
+  // const today = dayjs().day(4).hour(0).minute(0).second(0).millisecond(0).toISOString()
+  // const today = require('dayjs').day(4).hour(0).minute(0).second(0).millisecond(0).toISOString()
+  const date = new Date()
+  const day = date.getDay()
+  date.setDate(date.getDate() - (day || 0))
   const data: LoaderData = {
     teams: await db.team.findMany(),
     week: await db.week.findFirst({
       where: {
         date: {
-          equals: today,
+          // equals: today,
+          gte: date,
         },
       },
       include: {

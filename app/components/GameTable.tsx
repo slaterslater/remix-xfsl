@@ -17,7 +17,7 @@ export default function GameTable({ week, index = 0, isHomePage = false }: Props
 
   useEffect(() => {
     const thisWeek = dayjs().day(4).format('MMMM D')
-    if (gameDay !== thisWeek || weekRef.current == null) return
+    if (isHomePage || gameDay !== thisWeek || weekRef.current == null) return
     weekRef.current.scrollIntoView()
   }, [gameDay])
 

@@ -17,9 +17,7 @@ type LoaderData = {
 }
 
 export const loader: LoaderFunction = async () => {
-  const seasonEnd = dayjs('2022-09-08').toISOString()
-  // const today = dayjs().day(4).hour(0).minute(0).second(0).millisecond(0).toISOString()
-  // const today = require('dayjs').day(4).hour(0).minute(0).second(0).millisecond(0).toISOString()
+  const seasonEnd = '2022-09-08T04:00:00.000Z'
   const date = new Date()
   const day = date.getDay()
   date.setDate(date.getDate() - (day || 0))
@@ -28,7 +26,6 @@ export const loader: LoaderFunction = async () => {
     week: await db.week.findFirst({
       where: {
         date: {
-          // equals: today,
           gte: date,
         },
       },
@@ -60,7 +57,7 @@ export const loader: LoaderFunction = async () => {
           },
           {
             time: {
-              lte: seasonEnd,
+              lt: seasonEnd,
             },
           },
         ],

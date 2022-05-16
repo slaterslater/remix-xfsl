@@ -1,5 +1,5 @@
 import type { ActionFunction, LinksFunction } from '@remix-run/node'
-import { redirect, json } from '@remix-run/node'
+import { json } from '@remix-run/node'
 import { Form, useActionData } from '@remix-run/react'
 import { createUserSession, login } from '~/utils/session.server'
 
@@ -51,7 +51,6 @@ export const action: ActionFunction = async ({ request }) => {
   }
   if (Object.values(fieldErrors).some(Boolean)) return badRequest({ fieldErrors, fields })
 
-  // const user = null
   const user = await login({ username, password })
   if (!user) {
     return badRequest({

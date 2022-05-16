@@ -1,7 +1,7 @@
 import type { Week, Team } from '@prisma/client'
-import dayjs from 'dayjs'
 import { useEffect, useRef } from 'react'
 import { BsXDiamondFill } from 'react-icons/bs'
+import { dateFormat, gameDayFormat, timeFormat } from '~/lib/datetime'
 
 type Game = { awayTeam: Team | null; homeTeam: Team | null; time: Date; id: string }
 
@@ -13,13 +13,13 @@ type Props = {
 
 export default function GameTable({ week, index = 0, isHomePage = false }: Props) {
   const weekRef = useRef<HTMLHeadingElement>(null)
-  const gameDay = dayjs(week?.date).format('MMMM D')
+  const gameDay = dateFormat(week?.date)
 
   useEffect(() => {
-    const thisWeek = dayjs().day(4).format('MMMM D')
+    const thisWeek = gameDayFormat()
     if (isHomePage || gameDay !== thisWeek || weekRef.current == null) return
     weekRef.current.scrollIntoView()
-  }, [gameDay])
+  }, [gameDay, isHomePage])
 
   const { id: weekId, title, games, bringBaseId, takeBaseId } = week
   const isGame = !!games.length
@@ -46,9 +46,10 @@ export default function GameTable({ week, index = 0, isHomePage = false }: Props
           <tbody>
             {games?.map((game: Game) => {
               const { id: gameId, time, awayTeam, homeTeam } = game
+              const gameTime = timeFormat(time)
               return (
                 <tr key={gameId}>
-                  <td className="th">{dayjs(time).format('hmm')}</td>
+                  <td className="th">{gameTime}</td>
                   {Array.from([awayTeam, homeTeam]).map((team, i) => {
                     const isResponsible = team?.id === bringBaseId || team?.id === takeBaseId
                     return (

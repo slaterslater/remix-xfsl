@@ -28,11 +28,7 @@ if (!sessionSecret) {
 const storage = createCookieSessionStorage({
   cookie: {
     name: 'XFSL_session',
-    // normally you want this to be `secure: true`
-    // but that doesn't work on localhost for Safari
-    // https://web.dev/when-to-use-local-https/
     secure: true,
-    // secure: process.env.NODE_ENV === 'production',
     secrets: [sessionSecret],
     sameSite: 'lax',
     path: '/',
@@ -41,10 +37,38 @@ const storage = createCookieSessionStorage({
   },
 })
 
+function getUserSession(request: Request) {
+  return storage.getSession(request.headers.get('Cookie'))
+}
+
+export async function getUserId(request: Request) {
+  const session = await getUserSession(request)
+  const userId = session.get('userId')
+  if (!userId || typeof userId !== 'string') return null
+  return userId
+}
+
+export async function requireUserId(request: Request) {
+  const userId = await getUserId(request)
+  if (!userId || typeof userId !== 'string') {
+    throw redirect('/login')
+  }
+  return userId
+}
+
+export async function logout(request: Request) {
+  const session = await getUserSession(request)
+  return redirect('/login', {
+    headers: {
+      'Set-Cookie': await storage.destroySession(session),
+    },
+  })
+}
+
 export async function createUserSession(userId: string) {
   const session = await storage.getSession()
   session.set('userId', userId)
-  return redirect('/', {
+  return redirect('/admin', {
     headers: {
       'Set-Cookie': await storage.commitSession(session),
     },

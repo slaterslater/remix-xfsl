@@ -4,9 +4,9 @@ import { useLoaderData } from '@remix-run/react'
 import type { Week, Team } from '@prisma/client'
 
 import { db } from '~/utils/db.server'
-import dayjs from 'dayjs'
 import GameTable from '~/components/GameTable'
 import Standings from '~/components/Standings'
+import { dateFormat } from '~/lib/datetime'
 
 type Game = { awayTeam: Team | null; homeTeam: Team | null; time: Date; id: string }
 
@@ -69,10 +69,11 @@ export const loader: LoaderFunction = async () => {
 
 export default function IndexRoute() {
   const data = useLoaderData<LoaderData>()
+  const date = dateFormat(data.week?.date)
   const { teams, week, playedGames } = data
   return (
     <main>
-      <h2>{dayjs(data.week?.date).format('MMMM D')}</h2>
+      <h2>{date}</h2>
       {week && <GameTable week={week} isHomePage />}
       <h3>XFSL Standings</h3>
       <Standings teams={teams} games={playedGames} />

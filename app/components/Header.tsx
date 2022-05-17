@@ -15,7 +15,7 @@ export default function Header() {
           </li>
           <li>
             <Link to="/">
-              <img src="/xfsl-logo.png" width={80} height={40} alt="xfsl logo" />
+              <img src="/xfsl-logo.png" width={60} height={30} alt="xfsl logo" />
             </Link>
           </li>
           <li>

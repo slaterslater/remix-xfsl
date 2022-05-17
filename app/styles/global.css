@@ -73,14 +73,14 @@ html, body {
   flex-direction: column;
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
   --radius: 8px;
-  --h2top: 15px;
+  /* --h2top: 15px; */
 }
 
 @media (max-width: 400px) {
   html,body {
     background-color: var(--white);
     --radius: 0;
-    --h2top: 5px;
+    /* --h2top: 5px; */
   }
 }
 
@@ -413,7 +413,7 @@ label > [type="radio"] {
 
 header {
   background-color: var(--blue);
-  padding: 15px 0;
+  padding: 10px 0;
   border-bottom: 1px solid black;
   box-shadow: 0 5px 5px 0 var(--grey);
 }
@@ -422,7 +422,7 @@ main {
   max-width: 800px;
   width: 100%;
   /* min-width: 340px; */
-  margin: 20px auto;
+  margin: 10px auto;
   background-color: var(--white);
   border-radius: var(--radius);
   padding: 10px;
@@ -431,8 +431,9 @@ main {
 @media (min-width: 600px) {
   main {
     width: 500px;
-    padding: 30px;
-    padding-top: 10px;
+    margin: 25px auto;
+    padding: 25px;
+    padding-bottom: 5px;
   }
 }
 
@@ -475,7 +476,7 @@ caption {
   caption-side:bottom;
   text-align: right;
   font-size: 0.85rem;
-  height:0;
+  height:10px;
 }
 
 div[title] {

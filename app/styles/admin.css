@@ -1,0 +1,25 @@
+main {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+ul {
+  list-style-type: none;
+}
+
+main > ul > li {
+  max-width: 400px;
+  /* border: 1px solid var(--darkgrey); */
+  /* padding: 3px; */
+  margin: 3px 10px;
+}
+
+main > ul > li > a {
+  display: block;
+  width: 100%;
+}
+
+#logout {
+  margin-top: auto
+}

@@ -1,7 +1,8 @@
 import type { Week } from '@prisma/client'
 import type { LoaderFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { useLoaderData } from '@remix-run/react'
+import { Form, useLoaderData } from '@remix-run/react'
+import { timeFormat } from '~/lib/datetime'
 import { db } from '~/utils/db.server'
 
 type LoaderData = { week: Week }
@@ -9,16 +10,48 @@ type LoaderData = { week: Week }
 export const loader: LoaderFunction = async ({ params }) => {
   const week = await db.week.findUnique({
     where: { id: params.weekId },
+    include: {
+      games: {
+        orderBy: {
+          time: 'asc',
+        },
+        include: {
+          homeTeam: true,
+          awayTeam: true,
+        },
+      },
+    },
   })
   if (!week) throw new Error('Week not found')
   const data: LoaderData = { week }
   return json(data)
 }
 
+const handleChange = (e) => {
+  console.log('selected', e.target)
+}
+
+const GameSelect = ({ weekId, game }) => {
+  const { id, time, awayTeam, homeTeam } = game
+  const gameTime = timeFormat(time)
+  return (
+    <div className="gameSelect" key={id}>
+      <input type="radio" id={id} name={weekId} value={id} />
+      <label htmlFor={id}>{`${awayTeam.name} vs ${homeTeam.name} @ ${gameTime}`}</label>
+    </div>
+  )
+}
+
 export default function AdminWeekRoute() {
   const data = useLoaderData<LoaderData>()
   console.log({ data })
-  return <p>games</p>
+  return (
+    <Form method="post" onChange={handleChange}>
+      {data.week?.games?.map((game) => (
+        <GameSelect key={game.id} weekId={data.week.id} game={game} />
+      ))}
+    </Form>
+  )
 }
 
 // toDO

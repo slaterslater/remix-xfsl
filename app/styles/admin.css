@@ -23,3 +23,9 @@ main > ul > li > a {
 #logout {
   margin-top: auto
 }
+
+/** $weekId **/
+
+.gameSelect {
+  display: flex;
+}

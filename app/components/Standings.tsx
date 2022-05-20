@@ -6,18 +6,6 @@ type Props = {
   games: Array<{ awayTeam: Team | null; homeTeam: Team | null; winner: string }>
 }
 
-// type TeamData =
-//   | {
-//       gp: number
-//       wins: never[]
-//       loss: never[]
-//       ties: never[]
-//       pts: number
-//       id: string
-//       name: string
-//     }
-//   | undefined
-
 export default function Standings({ teams, games }: Props) {
   const standings = useMemo(() => {
     const standingsInit = teams.map((team) => ({
@@ -27,7 +15,7 @@ export default function Standings({ teams, games }: Props) {
       loss: [],
       ties: [],
       pts: 0,
-      rank: '',
+      rank: false,
     }))
 
     const teamsWithGameResults = games
@@ -73,9 +61,8 @@ export default function Standings({ teams, games }: Props) {
           const tiebreakerA = tiebreaker(a, b)
           const tiebreakerB = tiebreaker(b, a)
           if (tiebreakerB === tiebreakerA) {
-            const sharedRank = `${a.pts}-${tiebreakerB}`
-            a.rank = sharedRank
-            b.rank = sharedRank
+            a.rank = true
+            b.rank = true
           }
           return tiebreakerB - tiebreakerA
         }
@@ -83,14 +70,22 @@ export default function Standings({ teams, games }: Props) {
       })
 
     let rank = 0
-    let sharedRank = null
+    let shared = {
+      pts: 0,
+      rank: null,
+    }
 
     return teamsWithGameResults.map((team) => {
       if (team.rank) {
-        if (sharedRank == null) sharedRank = rank
-        team.rank = sharedRank
+        if (shared.rank === null || team.pts !== shared.pts) {
+          shared = {
+            pts: team.pts,
+            rank,
+          }
+        }
+        team.rank = shared.rank
       } else {
-        sharedRank = null
+        shared.rank = null
         team.rank = rank
       }
       rank += 1

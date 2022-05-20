@@ -56,17 +56,15 @@ export default function Standings({ teams, games }: Props) {
         return teamData
       }, standingsInit)
       .sort((a, b) => {
-        if (a.pts === b.pts) {
-          const tiebreaker = (team, opponent) => team.wins.filter((loser) => loser === opponent.name).length
-          const tiebreakerA = tiebreaker(a, b)
-          const tiebreakerB = tiebreaker(b, a)
-          if (tiebreakerB === tiebreakerA) {
-            a.rank = true
-            b.rank = true
-          }
-          return tiebreakerB - tiebreakerA
+        if (a.pts !== b.pts) return b.pts - a.pts
+        const tiebreaker = (team, opponent) => team.wins.filter((loser) => loser === opponent.name).length
+        const tiebreakerA = tiebreaker(a, b)
+        const tiebreakerB = tiebreaker(b, a)
+        if (tiebreakerB === tiebreakerA) {
+          a.rank = true
+          b.rank = true
         }
-        return b.pts - a.pts
+        return tiebreakerB - tiebreakerA
       })
 
     let rank = 0

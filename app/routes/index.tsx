@@ -73,8 +73,8 @@ export default function IndexRoute() {
   const { teams, week, playedGames } = data
   return (
     <main>
-      <h2>{date}</h2>
-      {week && <GameTable week={week} isHomePage />}
+      {/* <h2>{date}</h2>
+      {week && <GameTable week={week} isHomePage />} */}
       <h3>XFSL Standings</h3>
       <Standings teams={teams} games={playedGames} />
     </main>

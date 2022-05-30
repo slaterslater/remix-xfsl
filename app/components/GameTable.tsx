@@ -38,7 +38,7 @@ export default function GameTable({ week, index = 0, isHomePage = false }: Props
           ) : null}
           <thead>
             <tr>
-              <th className="offsceen">Time</th>
+              <th className="offscreen">Time</th>
               <th style={{ minWidth: '115px' }}>Away</th>
               <th style={{ minWidth: '115px' }}>Home</th>
             </tr>

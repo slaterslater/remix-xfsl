@@ -1,7 +1,9 @@
 import dayjs from 'dayjs'
 
+const token = 'MMMM D'
+
 export function dateFormat(date: Date | undefined) {
-  return dayjs(date).format('MMM D')
+  return dayjs(date).format(token)
 }
 
 export function timeFormat(time: Date | undefined) {
@@ -9,5 +11,5 @@ export function timeFormat(time: Date | undefined) {
 }
 
 export function gameDayFormat() {
-  return dayjs().day(4).format('MMM D')
+  return dayjs().day(4).format(token)
 }

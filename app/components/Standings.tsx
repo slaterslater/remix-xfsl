@@ -16,6 +16,7 @@ export default function Standings({ teams, games }: Props) {
       ties: [],
       pts: 0,
       rank: false,
+      breaker: null,
     }))
 
     const teamsWithGameResults = games
@@ -55,23 +56,24 @@ export default function Standings({ teams, games }: Props) {
 
         return teamData
       }, standingsInit)
+      .map((team, _, teams) => {
+        if (team.breaker) return team
+        teams
+          .filter(({ pts }) => pts === team.pts)
+          .forEach((t, _, group) => {
+            const names = group.map((each) => each.name)
+            const numOccurance = (n) => n.filter((name) => names.includes(name)).length
+            t.breaker = 2 * numOccurance(t.wins) + numOccurance(t.ties)
+          })
+        return team
+      })
       .sort((a, b) => {
-        // this smells...
-        if (a.pts === b.pts) {
+        if (a.pts !== b.pts) return b.pts - a.pts
+        if (a.breaker === b.breaker) {
           a.rank = true
           b.rank = true
         }
-        return b.pts - a.pts
-
-        // if (a.pts !== b.pts) return b.pts - a.pts
-        // const tiebreaker = (team, opponent) => team.wins.filter((loser) => loser === opponent.name).length
-        // const tiebreakerA = tiebreaker(a, b)
-        // const tiebreakerB = tiebreaker(b, a)
-        // if (tiebreakerB === tiebreakerA) {
-        //   a.rank = true
-        //   b.rank = true
-        // }
-        // return tiebreakerB - tiebreakerA
+        return b.breaker - a.breaker
       })
 
     let rank = 0

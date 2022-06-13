@@ -1,7 +1,7 @@
 main {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  /* min-height: 75%; */
 }
 
 ul {
@@ -26,6 +26,115 @@ main > ul > li > a {
 
 /** $weekId **/
 
-.gameSelect {
+.flex {
   display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.flex > label {
+  padding-left: 5px;
+  width: 100px;
+}
+
+.flex > select {
+  margin-left: 10px;
+  padding-left: 5px;
+  flex: 1
+}
+
+.flex > input[type="time"] {
+  font-size: 0.85rem;
+  padding:0;
+  height: 1.5rem;
+  margin-left: 10px;
+  padding-left: 5px;
+  flex: 1;
+  background-color: #e9e9ed;
+}
+
+/*** LOGIN ***/
+
+form {
+  padding:15px 10px 0 10px;
+  max-width:500px;
+  margin: 0 auto
+}
+
+form > div {
+  /* margin-top: 15px; */
+}
+
+input[type="text"], [type="password"] {
+  margin: 0 auto;
+  background-color: var(--white);
+}
+
+div > label {
+  text-transform: uppercase;
+  color: var(--darkgrey);
+  font-size: small;
+  font-weight: bold;
+  display:block;
+  /* padding-bottom: 5px; */
+}
+
+label > span {
+  font-weight: normal;
+  text-transform: lowercase;
+}
+
+button.button {
+  margin-top:30px;
+}
+
+button[type="submit"].blue {
+  color: var(--white);
+  background-color: var(--blue);
+  box-shadow: 0 5px 5px 0 var(--grey);
+}
+
+button[type="submit"].blue:hover {
+  color: var(--white);
+}
+
+form > table {
+margin-bottom: 10px;
+}
+
+td {
+  font-size: small;
+  max-width: 33%;
+}
+
+th:first-child {
+  text-align: left;
+  padding-left: 5px;
+  width: 35px
+}
+
+td:first-child {
+  text-align: left;
+  padding-left: 10px;
+}
+
+a#back, a#add-new-game {
+  margin-left: auto;
+  margin-right: 15px;
+  padding: 2px 4px 2px 2px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  text-transform: uppercase;
+  color: var(--darkgrey);
+  font-size: small;
+  font-weight: bold;
+  border: 1px solid var(--white);
+  border-radius: 2px;
+  min-width: 100px;
+}
+
+a#back:hover, a#add-new-game:hover {
+  border-color: var(--grey);
+  box-shadow: 0 3px 3px 0 var(--litegrey);
 }

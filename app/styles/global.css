@@ -426,6 +426,7 @@ main {
   background-color: var(--white);
   border-radius: var(--radius);
   padding: 10px;
+  flex: 1
 }
 
 @media (min-width: 600px) {
@@ -434,6 +435,7 @@ main {
     margin: 25px auto;
     padding: 25px;
     padding-bottom: 5px;
+    flex: unset
   }
 }
 

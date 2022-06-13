@@ -1,7 +1,7 @@
 import type { LinksFunction, LoaderFunction, ActionFunction } from '@remix-run/node'
-import { json, Response, redirect } from '@remix-run/node'
-import { Form, Link, Outlet, useActionData, useLoaderData, useSubmit } from '@remix-run/react'
-import { getUserId, requireUserId } from '~/utils/session.server'
+import { json, redirect } from '@remix-run/node'
+import { Form, Outlet, useLoaderData, useSubmit } from '@remix-run/react'
+import { requireUserId } from '~/utils/session.server'
 
 import { db } from '~/utils/db.server'
 import { dateFormat } from '~/lib/datetime'
@@ -29,9 +29,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 export const action: ActionFunction = async ({ request }) => {
   const form = await request.formData()
   const weekId = form.get('week')
-  // console.log('weekid = ', weekId)
-  // return json({ weekId })
-  return redirect(`admin/${weekId}`)
+  return redirect(`admin/week/${weekId}`)
 }
 
 export default function AdminIndexRoute() {
@@ -46,14 +44,17 @@ export default function AdminIndexRoute() {
     <main>
       <h2>Admin</h2>
       <Form method="post" onChange={handleChange}>
-        <select id="week" name="week" defaultValue="default">
-          <option value="default" disabled>
-            select week
-          </option>
-          {data.weeks.map((week) => (
-            <option key={week.id} value={week.id}>{`${dateFormat(week.date)}: ${week.title}`}</option>
-          ))}
-        </select>
+        <div className="flex">
+          <label htmlFor="week">Select date</label>
+          <select id="week" name="week" defaultValue="">
+            <option value="" disabled>
+              {null}
+            </option>
+            {data.weeks?.map((week) => (
+              <option key={week.id} value={week.id}>{`${dateFormat(week.date)}`}</option>
+            ))}
+          </select>
+        </div>
       </Form>
       <Outlet />
       <form action="/logout" method="post" id="logout">

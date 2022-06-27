@@ -1,19 +1,39 @@
 import { Form } from '@remix-run/react'
 import dayjs from 'dayjs'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
+import type { Team, Game } from '@prisma/client'
 import TeamSelect from './TeamSelect'
 
-export default function GameForm({ teams, game }) {
+interface GameInterface {
+  teams: Team[]
+  game?: Game
+}
+
+export default function GameForm({ teams, game }: GameInterface) {
+  const timeRef = useRef(null)
   const { time, weekId, awayTeam, homeTeam, winner } = game || {}
-  const hh = dayjs(time).hour()
-  const mm = dayjs(time).minute() || '00'
+  const hour = dayjs(time).hour()
+  const minute = dayjs(time).minute() || '00'
+  const defaultTime = time ? `${hour}:${minute}` : ''
   const [awayTeamName, setAwayTeamName] = useState(awayTeam?.name)
   const [homeTeamName, setHomeTeamName] = useState(homeTeam?.name)
+
+  const handleChange = (e) => {
+    const [hh, mm] = e.target.value.split(':')
+    const updateTime = dayjs(time)
+      .hour(hh || 0)
+      .minute(mm || 0)
+      .toISOString()
+    timeRef.current.value = updateTime
+  }
+
   return (
-    <Form>
+    <Form method="post">
+      <input type="hidden" id="time" name="time" value={String(time)} ref={timeRef} />
+      <input type="hidden" id="weekId" name="weekId" value={weekId} />
       <div className="flex">
         <label htmlFor="time">Time</label>
-        <input type="time" id="time" name="time" defaultValue={time ? `${hh}:${mm}` : ''} />
+        <input type="time" id="gameTime" name="gameTime" defaultValue={defaultTime} onChange={handleChange} />
       </div>
       <TeamSelect teams={teams} label="Away Team" name="awayTeam" selected={awayTeam?.id} onChange={setAwayTeamName} />
       <TeamSelect teams={teams} label="Home Team" name="homeTeam" selected={homeTeam?.id} onChange={setHomeTeamName} />
@@ -28,7 +48,7 @@ export default function GameForm({ teams, game }) {
         </select>
       </div>
       <button type="submit" className="blue button">
-        UPDATE
+        UPDATE FORM
       </button>
     </Form>
   )

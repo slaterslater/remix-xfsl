@@ -68,7 +68,7 @@ export default function AdminWeekRoute() {
     submit(e.currentTarget, { replace: true })
   }
 
-  const { id: weekId, takeBaseId, bringBaseId } = data.week
+  const { id: weekId, takeBaseId, bringBaseId, games } = data.week
 
   const baseJobs = useMemo(
     () => [
@@ -103,16 +103,18 @@ export default function AdminWeekRoute() {
             </tr>
           </thead>
           <tbody>
-            {data.week.games?.map((game) => (
+            {games?.map((game) => (
               <GameRow key={game.id} game={game} />
             ))}
           </tbody>
         </table>
       </Form>
-      <Link id="add-new-game" to={`/admin/new/${weekId}`}>
-        <AddIcon />
-        New Game
-      </Link>
+      {games.length < 3 && (
+        <Link id="add-new-game" to={`/admin/new/${weekId}`}>
+          <AddIcon />
+          New Game
+        </Link>
+      )}
     </>
   )
 }

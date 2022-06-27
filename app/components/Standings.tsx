@@ -110,9 +110,9 @@ export default function Standings({ teams, games }: Props) {
           <th>
             <span className="offscreen">TEAM</span>
           </th>
-          <th>
+          {/* <th>
             <div title="games played">GP</div>
-          </th>
+          </th> */}
           <th>
             <div title="wins">W</div>
           </th>
@@ -138,7 +138,7 @@ export default function Standings({ teams, games }: Props) {
                 <sup>{suffix[rank] || 'th'}</sup>
               </td>
               <td>{name}</td>
-              <td>{gp}</td>
+              {/* <td>{gp}</td> */}
               <td>{wins.length}</td>
               <td>{loss.length}</td>
               <td>{ties.length}</td>

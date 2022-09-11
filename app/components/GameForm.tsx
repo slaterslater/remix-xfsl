@@ -1,6 +1,6 @@
 import { Form } from '@remix-run/react'
 import dayjs from 'dayjs'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import type { Team, Game } from '@prisma/client'
 import TeamSelect from './TeamSelect'
 
@@ -10,8 +10,8 @@ interface GameInterface {
 }
 
 export default function GameForm({ teams, game }: GameInterface) {
-  const timeRef = useRef(null)
   const { time, weekId, awayTeam, homeTeam, winner } = game || {}
+  const [timeValue, setTimeValue] = useState(String(time))
   const hour = dayjs(time).hour()
   const minute = dayjs(time).minute() || '00'
   const defaultTime = time ? `${hour}:${minute}` : ''
@@ -24,12 +24,13 @@ export default function GameForm({ teams, game }: GameInterface) {
       .hour(hh || 0)
       .minute(mm || 0)
       .toISOString()
-    timeRef.current.value = updateTime
+
+    setTimeValue(updateTime)
   }
 
   return (
     <Form method="post">
-      <input type="hidden" id="time" name="time" value={String(time)} ref={timeRef} />
+      <input type="hidden" id="time" name="time" value={timeValue} key={timeValue} />
       <input type="hidden" id="weekId" name="weekId" value={weekId} />
       <div className="flex">
         <label htmlFor="time">Time</label>
@@ -48,7 +49,7 @@ export default function GameForm({ teams, game }: GameInterface) {
         </select>
       </div>
       <button type="submit" className="blue button">
-        UPDATE FORM
+        UPDATE GAME
       </button>
     </Form>
   )

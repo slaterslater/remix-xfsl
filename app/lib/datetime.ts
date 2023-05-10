@@ -13,3 +13,5 @@ export function timeFormat(time: Date | undefined) {
 export function gameDayFormat() {
   return dayjs().day(4).format(token)
 }
+
+export const jan1: Date = new Date(`${new Date().getFullYear()}-01-01`)

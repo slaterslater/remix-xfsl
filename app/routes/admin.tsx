@@ -4,15 +4,14 @@ import { Form, Outlet, useLoaderData, useSubmit } from '@remix-run/react'
 import { requireUserId } from '~/utils/session.server'
 
 import { db } from '~/utils/db.server'
-import { dateFormat } from '~/lib/datetime'
+import { dateFormat, jan1 } from '~/lib/datetime'
 import adminStyles from '~/styles/admin.css'
 
 export const links: LinksFunction = () => [{ rel: 'stylesheet', href: adminStyles }]
 
 export const loader: LoaderFunction = async ({ request }) => {
   await requireUserId(request)
-  const thisYear = new Date().getFullYear()
-  const jan1 = new Date(`${thisYear}-01-01`)
+
   const data = {
     weeks: await db.week.findMany({
       orderBy: {

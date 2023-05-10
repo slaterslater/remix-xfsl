@@ -5,6 +5,7 @@ import { useLoaderData } from '@remix-run/react'
 import { db } from '~/utils/db.server'
 import GameTable from '~/components/GameTable'
 import type { Team, Week } from '@prisma/client'
+import { jan1 } from '~/lib/datetime'
 
 type Game = { awayTeam: Team | null; homeTeam: Team | null; time: Date; id: string }
 
@@ -31,6 +32,11 @@ export const loader: LoaderFunction = async () => {
           },
         },
       },
+      where: {
+        date: {
+          gt: jan1,
+        },
+      },
     }),
   }
   return json(data)
@@ -40,7 +46,7 @@ export default function ScheduleIndexRoute() {
   const data = useLoaderData<LoaderData>()
   return (
     <main>
-      <h2>XFSL Season 2022</h2>
+      <h2>{`XFSL Season ${new Date().getFullYear()}`}</h2>
       {data.weeks.map((week, i) => (
         <GameTable key={week.id} week={week} index={i} />
       ))}

@@ -1,28 +1,31 @@
 import { PrismaClient } from '@prisma/client'
 import dayjs from 'dayjs'
 
-import type { Week, Game } from '@prisma/client'
+import type { Week, Game, Team } from '@prisma/client'
 
-import { teams, weeks, games } from './seed-data'
+import { weeks, games } from './seed-data-2023'
 
 const db = new PrismaClient()
-const { USERNAME, PASSWORD } = process.env
+// const { USERNAME, PASSWORD } = process.env
 
 async function seed() {
-  await db.user.create({
-    data: { username: USERNAME, passwordHash: PASSWORD },
-  })
+  // await db.user.create({
+  //   data: { username: USERNAME, passwordHash: PASSWORD },
+  // })
 
-  await Promise.all(teams.map((team) => db.team.create({ data: team })))
+  // await Promise.all(teams.map((team) => db.team.create({ data: team })))
 
-  const newTeams = await db.team.findMany()
+  const teams = await db.team.findMany()
+
+  const idFromTeamName = (name: string | null): string | null =>
+    teams.find((team: Team) => name === team.name)?.id || null
+  const teamIds = (teamsNames: (string | null)[]) => teamsNames.map((name: string | null) => idFromTeamName(name))
 
   await Promise.all(
     weeks.map((week) => {
       const { title, date, teamBringsBases, teamTakesBases } = week
-      const bringBaseId = newTeams.find(({ name }) => name === teamBringsBases)?.id
-      const takeBaseId = newTeams.find(({ name }) => name === teamTakesBases)?.id
-      const weekData: Week = {
+      const [bringBaseId, takeBaseId] = teamIds([teamBringsBases, teamTakesBases])
+      const weekData = {
         title,
         date: new Date(date),
         bringBaseId,
@@ -38,9 +41,8 @@ async function seed() {
     games.map((game) => {
       const { time, away, home, winner } = game
       const weekId = newWeeks.find(({ date }) => dayjs(date).isSame(time, 'day'))?.id
-      const awayTeamId = newTeams.find(({ name }) => name === away)?.id
-      const homeTeamId = newTeams.find(({ name }) => name === home)?.id
-      const gameData: Game = {
+      const [awayTeamId, homeTeamId] = teamIds([away, home])
+      const gameData: any = {
         time: new Date(time),
         weekId,
         awayTeamId,

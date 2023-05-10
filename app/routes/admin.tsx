@@ -11,6 +11,8 @@ export const links: LinksFunction = () => [{ rel: 'stylesheet', href: adminStyle
 
 export const loader: LoaderFunction = async ({ request }) => {
   await requireUserId(request)
+  const thisYear = new Date().getFullYear()
+  const jan1 = new Date(`${thisYear}-01-01`)
   const data = {
     weeks: await db.week.findMany({
       orderBy: {
@@ -20,6 +22,11 @@ export const loader: LoaderFunction = async ({ request }) => {
         id: true,
         date: true,
         title: true,
+      },
+      where: {
+        date: {
+          gt: jan1,
+        },
       },
     }),
   }

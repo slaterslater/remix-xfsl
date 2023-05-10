@@ -16,11 +16,16 @@ type LoaderData = {
   playedGames: Array<{ awayTeam: Team | null; homeTeam: Team | null; winner: string }>
 }
 
+// 2DO
+// something that can check this years date
+
 export const loader: LoaderFunction = async () => {
-  const seasonEnd = '2022-09-08T04:00:00.000Z'
   const date = new Date()
   const day = date.getDay()
   date.setDate(date.getDate() - (day || 0))
+  const thisYear = new Date(`${date.getFullYear()}-01-01`)
+  const seasonEnd = '2023-09-09'
+  const seasonEndDate = new Date(seasonEnd)
   const data: LoaderData = {
     teams: await db.team.findMany(),
     week: await db.week.findFirst({
@@ -60,7 +65,8 @@ export const loader: LoaderFunction = async () => {
           },
           {
             time: {
-              lt: seasonEnd,
+              gt: thisYear,
+              lt: seasonEndDate,
             },
           },
         ],

@@ -44,22 +44,29 @@ export default function GameTable({ week, index = 0, isHomePage = false }: Props
             </tr>
           </thead>
           <tbody>
-            {games?.map((game: Game) => {
-              const { id: gameId, time, awayTeam, homeTeam } = game
+            {games?.map((game: Game, i) => {
+              const { id: gameId, time, awayTeam, homeTeam, gameType } = game
               const gameTime = timeFormat(time)
+              const isLeagueGame = gameType !== 'EXHIBITION'
               return (
                 <tr key={gameId}>
                   <td className="th">{gameTime}</td>
-                  {Array.from([awayTeam, homeTeam]).map((team, i) => {
-                    const isResponsible = team?.id === bringBaseId || team?.id === takeBaseId
-                    return (
-                      <td key={`team-${i}`} className={team?.name.toLowerCase()}>
-                        {team?.name}
-                        {` `}
-                        {isResponsible && <BsXDiamondFill size={12} />}
-                      </td>
-                    )
-                  })}
+                  {isLeagueGame &&
+                    Array.from([awayTeam, homeTeam]).map((team, i) => {
+                      const isResponsible = team?.id === bringBaseId || team?.id === takeBaseId
+                      return (
+                        <td key={`team-${i}`} className={team?.name.toLowerCase()}>
+                          {team?.name}
+                          {` `}
+                          {isResponsible && <BsXDiamondFill size={12} />}
+                        </td>
+                      )
+                    })}
+                  {!isLeagueGame && (
+                    <td className={`exhibition-${i % 2}`} colSpan="2">
+                      {game.title}
+                    </td>
+                  )}
                 </tr>
               )
             })}

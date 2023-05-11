@@ -20,7 +20,6 @@ export const loader: LoaderFunction = async () => {
   const date = new Date()
   const day = date.getDay()
   date.setDate(date.getDate() - (day || 0))
-  const seasonEnd = new Date('2023-09-09')
 
   const data: LoaderData = {
     teams: await db.team.findMany(),
@@ -54,6 +53,7 @@ export const loader: LoaderFunction = async () => {
       },
       where: {
         AND: [
+          { gameType: 'REGULAR' },
           {
             winner: {
               not: '',
@@ -62,7 +62,6 @@ export const loader: LoaderFunction = async () => {
           {
             time: {
               gt: jan1,
-              lt: seasonEnd,
             },
           },
         ],

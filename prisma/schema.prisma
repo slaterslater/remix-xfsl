@@ -10,6 +10,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id           String   @id @default(uuid())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  username     String   @unique
+  passwordHash String
+}
+
 model Team {
   id         String @id @default(uuid())
   name       String @unique
@@ -32,6 +40,8 @@ model Week {
 
 model Game {
   id         String   @id @default(uuid())
+  gameType   GameType @default(REGULAR)
+  title      String?
   time       DateTime
   weekId     String
   week       Week     @relation(fields: [weekId], references: [id])
@@ -42,10 +52,8 @@ model Game {
   winner     String
 }
 
-model User {
-  id           String   @id @default(uuid())
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  username     String   @unique
-  passwordHash String
+enum GameType {
+  REGULAR
+  EXHIBITION
+  PLAYOFF
 }

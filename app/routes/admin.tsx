@@ -6,6 +6,7 @@ import { requireUserId } from '~/utils/session.server'
 import { db } from '~/utils/db.server'
 import { dateFormat, jan1 } from '~/lib/datetime'
 import adminStyles from '~/styles/admin.css'
+import dayjs from 'dayjs'
 
 export const links: LinksFunction = () => [{ rel: 'stylesheet', href: adminStyles }]
 
@@ -46,6 +47,8 @@ export default function AdminIndexRoute() {
     submit(e.currentTarget, { replace: true })
   }
 
+  const isCurrent = (date) => dayjs().isSame(date, 'week')
+
   return (
     <main>
       <h2>Admin</h2>
@@ -57,7 +60,9 @@ export default function AdminIndexRoute() {
               {null}
             </option>
             {data.weeks?.map((week) => (
-              <option key={week.id} value={week.id}>{`${dateFormat(week.date)}`}</option>
+              <option key={week.id} value={week.id}>{`${dateFormat(week.date)} ${
+                isCurrent(week.date) ? '*****' : ''
+              }`}</option>
             ))}
           </select>
         </div>

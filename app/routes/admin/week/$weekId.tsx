@@ -44,16 +44,22 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 const GameRow = ({ game }) => {
-  const { id, time, awayTeam, homeTeam } = game
+  const { id, time, awayTeam, homeTeam, gameType } = game
   const gameTime = timeFormat(time)
+  const isLeagueGame = gameType !== 'EXHIBITION'
   return (
     <tr>
       <td>
         <input type="checkbox" id={id} name="game" value={id} />
       </td>
       <td>{gameTime}</td>
-      <td className={awayTeam?.name.toLowerCase()}>{awayTeam.name}</td>
-      <td className={homeTeam?.name.toLowerCase()}>{homeTeam.name}</td>
+      {isLeagueGame && (
+        <>
+          <td className={awayTeam?.name.toLowerCase()}>{awayTeam?.name}</td>
+          <td className={homeTeam?.name.toLowerCase()}>{homeTeam?.name}</td>
+        </>
+      )}
+      {!isLeagueGame && <td colSpan="2">{game.title}</td>}
     </tr>
   )
 }

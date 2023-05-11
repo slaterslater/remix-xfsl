@@ -43,6 +43,24 @@
   color: var(--slate);
 }
 
+.exhibition-0 {
+  /* background-color: #3c7b5d; */
+  /* background-color: #9fc5e7; */
+  /* background-color: #b6d7a8; */
+  /* color: #f4f4ed; */
+  background-color: var(--litegrey);
+  text-transform: capitalize;
+}
+
+.exhibition-1 {
+  /* background-color: #dd7258; */
+  /* background-color: #e6b8af; */
+  /* color: #f4f4ed; */
+  background-color: var(--darkgrey);
+  color: var(--white);
+  text-transform: capitalize;
+}
+
 html {
   box-sizing: border-box;
 }

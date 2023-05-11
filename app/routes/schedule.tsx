@@ -29,6 +29,8 @@ export const loader: LoaderFunction = async () => {
             time: true,
             homeTeam: true,
             awayTeam: true,
+            gameType: true,
+            title: true,
           },
         },
       },

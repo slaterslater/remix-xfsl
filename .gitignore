@@ -5,3 +5,8 @@ node_modules
 /.netlify
 .env
 /notes
+
+/prisma/migrations
+
+/.DS_Store
+/public/.DS_Store

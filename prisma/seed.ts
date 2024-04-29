@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 
 import type { Week, Game, Team } from '@prisma/client'
 
-import { weeks, games } from './seed-data-2023'
+import { weeks, games } from './seed-data-2024'
 
 const db = new PrismaClient()
 // const { USERNAME, PASSWORD } = process.env

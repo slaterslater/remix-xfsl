@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -19,12 +16,13 @@ model User {
 }
 
 model Team {
-  id         String @id @default(uuid())
-  name       String @unique
-  homeGames  Game[] @relation(name: "homeTeam")
-  awayGames  Game[] @relation(name: "awayTeam")
-  bringBases Week[] @relation(name: "bringBase")
-  takeBases  Week[] @relation(name: "takeBase")
+  id         String   @id @default(dbgenerated("gen_random_uuid()"))
+  name       String   @unique
+  isActive   Boolean? @default(false)
+  awayGames  Game[]   @relation("awayTeam")
+  homeGames  Game[]   @relation("homeTeam")
+  bringBases Week[]   @relation("bringBase")
+  takeBases  Week[]   @relation("takeBase")
 }
 
 model Week {
@@ -32,24 +30,24 @@ model Week {
   date          DateTime
   title         String
   bringBaseId   String?
-  bringBaseTeam Team?    @relation(fields: [bringBaseId], references: [id], name: "bringBase")
   takeBaseId    String?
-  takeBaseTeam  Team?    @relation(fields: [takeBaseId], references: [id], name: "takeBase")
+  bringBaseTeam Team?    @relation("bringBase", fields: [bringBaseId], references: [id])
+  takeBaseTeam  Team?    @relation("takeBase", fields: [takeBaseId], references: [id])
   games         Game[]
 }
 
 model Game {
   id         String   @id @default(uuid())
-  gameType   GameType @default(REGULAR)
-  title      String?
   time       DateTime
   weekId     String
-  week       Week     @relation(fields: [weekId], references: [id])
   homeTeamId String?
-  homeTeam   Team?    @relation(fields: [homeTeamId], references: [id], name: "homeTeam")
   awayTeamId String?
-  awayTeam   Team?    @relation(fields: [awayTeamId], references: [id], name: "awayTeam")
   winner     String
+  gameType   GameType @default(REGULAR)
+  title      String?
+  awayTeam   Team?    @relation("awayTeam", fields: [awayTeamId], references: [id])
+  homeTeam   Team?    @relation("homeTeam", fields: [homeTeamId], references: [id])
+  week       Week     @relation(fields: [weekId], references: [id])
 }
 
 enum GameType {

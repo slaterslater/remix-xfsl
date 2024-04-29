@@ -22,7 +22,9 @@ export const loader: LoaderFunction = async () => {
   date.setDate(date.getDate() - (day || 0))
 
   const data: LoaderData = {
-    teams: await db.team.findMany(),
+    teams: await db.team.findMany({
+      where: { isActive: true },
+    }),
     week: await db.week.findFirst({
       orderBy: {
         date: 'asc',

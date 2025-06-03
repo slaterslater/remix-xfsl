@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 
 import type { Week, Game, Team } from '@prisma/client'
 
-import { weeks, games } from './seed-data-2024'
+import { weeks, games } from '../notes/2025/seed-data-2025'
 
 const db = new PrismaClient()
 // const { USERNAME, PASSWORD } = process.env
@@ -17,8 +17,9 @@ async function seed() {
 
   const teams = await db.team.findMany()
 
-  const idFromTeamName = (name: string | null): string | null =>
+  const idFromTeamName = (name: string | null): number | null =>
     teams.find((team: Team) => name === team.name)?.id || null
+
   const teamIds = (teamsNames: (string | null)[]) => teamsNames.map((name: string | null) => idFromTeamName(name))
 
   await Promise.all(

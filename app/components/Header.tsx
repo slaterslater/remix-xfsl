@@ -22,7 +22,7 @@ export default function Header() {
             </Link>
           </li>
           <li>
-            <a href="/XFSL-2024-Schedule-and-Rules.pdf" target="_blank">
+            <a href="/XFSL-2025-Schedule-and-Rules.pdf" target="_blank">
               Rules
             </a>
           </li>

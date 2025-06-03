@@ -10,21 +10,7 @@ declare global {
 // the server with every change, but we want to make sure we don't
 // create a new connection to the DB with every change either.
 if (process.env.NODE_ENV === 'production') {
-  try {
-    db = new PrismaClient()
-    // Test the connection
-    db.$connect()
-      .then(() => {
-        console.log('Successfully connected to database')
-      })
-      .catch((error) => {
-        console.error('Failed to connect to database:', error)
-        throw error
-      })
-  } catch (error) {
-    console.error('Failed to initialize Prisma client:', error)
-    throw error
-  }
+  db = new PrismaClient()
 } else {
   if (!global.__db) {
     global.__db = new PrismaClient()

@@ -78,6 +78,7 @@ export default function IndexRoute() {
   const data = useLoaderData<LoaderData>()
   const date = dateFormat(data.week?.date)
   const { teams, week, playedGames } = data
+
   return (
     <main>
       <h2>{date}</h2>

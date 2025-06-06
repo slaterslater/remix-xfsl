@@ -13,7 +13,7 @@
   --litegrey: #ececec;
   --grey: #999999;
   --darkgrey: #666666;
-  --font-body: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+  --font-body: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   --font-display: graduate, var(--font-body);
   --color-border: var(--darkgrey)
 }
@@ -22,22 +22,27 @@
   background-color: #b6d7a8;
   color: var(--slate);
 }
+
 .heist {
   background-color: #b4a7d6;
   color: var(--slate);
 }
+
 .gastons {
   background-color: #9fc5e7;
   color: var(--slate);
 }
+
 .lemons {
   background-color: #fed966;
   color: var(--slate);
 }
+
 .pigeons {
   background-color: #f6b26b;
   color: var(--slate);
 }
+
 .dogs {
   background-color: #e6b8af;
   color: var(--slate);
@@ -80,22 +85,25 @@ html {
   outline-offset: 2px;
 }
 
-html, body {
+html,
+body {
   padding: 0;
   margin: 0;
-  width:100%;
+  width: 100%;
   height: 100%;
   background-color: var(--litegrey);
   color: var(--slate);
   display: flex;
   flex-direction: column;
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   --radius: 8px;
   /* --h2top: 15px; */
 }
 
 @media (max-width: 400px) {
-  html,body {
+
+  html,
+  body {
     background-color: var(--white);
     --radius: 0;
     /* --h2top: 5px; */
@@ -172,13 +180,14 @@ h6 {
 } */
 
 h2 {
-  text-align:center;
+  text-align: center;
   margin-top: var(--h2top);
 }
+
 h3 {
   color: var(--darkgrey);
   border-bottom: 1px solid var(--litegrey);
-  margin-top:30px;
+  margin-top: 30px;
   margin-bottom: 15px;
   text-transform: capitalize;
 }
@@ -228,8 +237,7 @@ h3 {
   box-shadow: 0 var(--shadow-size) 0 0 var(--shadow-color);
   outline-offset: 2px;
   transform: translateY(0);
-  transition: background-color 50ms ease-out, box-shadow
-      50ms ease-out,
+  transition: background-color 50ms ease-out, box-shadow 50ms ease-out,
     transform 100ms cubic-bezier(0.3, 0.6, 0.8, 1.25);
 }
 
@@ -237,17 +245,13 @@ h3 {
   --raise: 1px;
   color: var(--color-background);
   text-decoration: none;
-  box-shadow: 0 calc(var(--shadow-size) + var(--raise)) 0 0 var(
-      --shadow-color
-    );
+  box-shadow: 0 calc(var(--shadow-size) + var(--raise)) 0 0 var(--shadow-color);
   transform: translateY(calc(var(--raise) * -1));
 }
 
 .button:active {
   --press: 1px;
-  box-shadow: 0 calc(var(--shadow-size) - var(--press)) 0 0 var(
-      --shadow-color
-    );
+  box-shadow: 0 calc(var(--shadow-size) - var(--press)) 0 0 var(--shadow-color);
   transform: translateY(var(--press));
   background-color: var(--color-links-hover);
 }
@@ -394,13 +398,13 @@ label {
   margin: 0;
 }
 
-[type="checkbox"] + label,
-[type="radio"] + label {
+[type="checkbox"]+label,
+[type="radio"]+label {
   margin-left: 0.5rem;
 }
 
-label > [type="checkbox"],
-label > [type="radio"] {
+label>[type="checkbox"],
+label>[type="radio"] {
   margin-right: 0.5rem;
 }
 
@@ -462,7 +466,7 @@ nav {
   width: 100%;
 }
 
-nav > ul {
+nav>ul {
   max-width: 700px;
   padding: 0;
   margin: 0 auto;
@@ -472,12 +476,12 @@ nav > ul {
   align-items: center;
 }
 
-nav > ul > li {
+nav>ul>li {
   width: 115px;
   text-align: center;
 }
 
-nav > ul > li > a {
+nav>ul>li>a {
   text-decoration: none;
   text-transform: uppercase;
   color: var(--litegrey);
@@ -494,10 +498,10 @@ table {
 caption {
   margin-top: 5px;
   padding-right: 5px;
-  caption-side:bottom;
+  caption-side: bottom;
   text-align: right;
   font-size: 0.85rem;
-  height:10px;
+  height: 10px;
 }
 
 div[title] {
@@ -523,13 +527,13 @@ th {
   width: 20px;
 }
 
-.th > sup {
+.th>sup {
   /* top: -0.3em; */
   font-size: 8px;
   top: 1px;
   position: relative;
 }
-  
+
 td {
   max-width: 50%;
   padding: 5px;
@@ -540,7 +544,7 @@ td {
   justify-content: flex-end;
 }
 
-.schedule-placeholder > p {
+.schedule-placeholder>p {
   text-transform: uppercase;
   color: var(--darkgrey);
   background-color: var(--white);
@@ -560,4 +564,9 @@ footer {
   margin-top: auto;
   border-top: 1px solid black;
   box-shadow: 0px 5px 5px var(--slate) inset;
+}
+
+.pts {
+  font-size: 0.60rem;
+  padding-bottom: 5px;
 }

@@ -31,6 +31,7 @@ export const loader: LoaderFunction = async () => {
             awayTeam: true,
             gameType: true,
             title: true,
+            winner: true,
           },
         },
       },

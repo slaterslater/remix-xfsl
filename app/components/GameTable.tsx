@@ -1,9 +1,20 @@
 import type { Week, Team } from '@prisma/client'
+import dayjs from 'dayjs'
 import { useEffect, useRef } from 'react'
-import { BsXDiamondFill } from 'react-icons/bs'
+import { BsCloudRain, BsXDiamondFill } from 'react-icons/bs'
+import { MdOutlinePlusOne, MdOutlineExposurePlus2 } from "react-icons/md"
+import type { IconType } from 'react-icons'
 import { dateFormat, gameDayFormat, timeFormat } from '~/lib/datetime'
 
-type Game = { awayTeam: Team | null; homeTeam: Team | null; time: Date; id: string }
+type Game = {
+  awayTeam: Team | null
+  homeTeam: Team | null
+  time: Date
+  id: string
+  gameType: string
+  title: string
+  winner: string | null
+}
 
 type Props = {
   week: Week & { games: Game[] }
@@ -24,6 +35,8 @@ export default function GameTable({ week, index = 0, isHomePage = false }: Props
   const { id: weekId, title, games, bringBaseId, takeBaseId } = week
   const isGame = !!games.length
 
+  const hasPlayed = dayjs(week.date).isAfter(dayjs())
+
   return (
     <>
       <h3 id={weekId} ref={weekRef}>
@@ -31,39 +44,41 @@ export default function GameTable({ week, index = 0, isHomePage = false }: Props
       </h3>
       {isGame && (
         <table>
-          {index % 2 === 0 ? (
+          {hasPlayed && (index % 2 === 0) && (
             <caption>
               <BsXDiamondFill size={12} /> brings bases / takes bases
             </caption>
-          ) : null}
+          )}
           <thead>
             <tr>
               <th className="offscreen">Time</th>
-              <th style={{ minWidth: '115px' }}>Away</th>
-              <th style={{ minWidth: '115px' }}>Home</th>
+              <th style={{ minWidth: '115px', verticalAlign: 'middle' }}>Away</th>
+              <th style={{ minWidth: '115px', verticalAlign: 'middle' }}>Home</th>
             </tr>
           </thead>
           <tbody>
             {games?.map((game: Game, i) => {
-              const { id: gameId, time, awayTeam, homeTeam, gameType } = game
+              const { id: gameId, time, awayTeam, homeTeam, gameType, winner } = game
               const gameTime = timeFormat(time)
               const isLeagueGame = gameType !== 'EXHIBITION'
               return (
                 <tr key={gameId}>
-                  <td className="th">{gameTime}</td>
+                  <td className="th" style={{ verticalAlign: 'middle' }}>{gameTime}</td>
                   {isLeagueGame &&
                     Array.from([awayTeam, homeTeam]).map((team, i) => {
-                      const isResponsible = team?.id === bringBaseId || team?.id === takeBaseId
+                      const isResponsible = !winner && (team?.id === bringBaseId || team?.id === takeBaseId)
+                      const teamName = team?.name.toLowerCase()
+                      const classNames = [teamName].filter(Boolean).join(' ')
                       return (
-                        <td key={`team-${i}`} className={team?.name.toLowerCase()}>
-                          {team?.name}
-                          {` `}
+                        <td key={`team-${i}`} className={classNames} style={{ verticalAlign: 'middle' }}>
+                          {team?.name + ' '}
                           {isResponsible && <BsXDiamondFill size={12} />}
+                          {getResult(winner, i)}
                         </td>
                       )
                     })}
                   {!isLeagueGame && (
-                    <td className={`exhibition-${i % 2}`} colSpan="2">
+                    <td className={`exhibition-${i % 2}`} colSpan={2} style={{ verticalAlign: 'middle' }}>
                       {game.title}
                     </td>
                   )}
@@ -80,4 +95,20 @@ export default function GameTable({ week, index = 0, isHomePage = false }: Props
       )}
     </>
   )
+}
+
+function getResult(winner: string | null, i: number) {
+  if (!winner) return null
+  switch (winner) {
+    case 'tie':
+      return <MdOutlinePlusOne size={12} />
+    case 'away':
+      return i === 0 ? <MdOutlineExposurePlus2 size={12} /> : null
+    case 'home':
+      return i === 1 ? <MdOutlineExposurePlus2 size={12} /> : null
+    case 'np':
+      return <BsCloudRain size={12} />
+    default:
+      return null
+  }
 }

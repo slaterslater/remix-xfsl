@@ -52,8 +52,8 @@ export default function GameTable({ week, index = 0, isHomePage = false }: Props
           <thead>
             <tr>
               <th className="offscreen">Time</th>
-              <th style={{ minWidth: '115px', verticalAlign: 'middle' }}>Away</th>
-              <th style={{ minWidth: '115px', verticalAlign: 'middle' }}>Home</th>
+              <th>Away</th>
+              <th>Home</th>
             </tr>
           </thead>
           <tbody>
@@ -63,22 +63,23 @@ export default function GameTable({ week, index = 0, isHomePage = false }: Props
               const isLeagueGame = gameType !== 'EXHIBITION'
               return (
                 <tr key={gameId}>
-                  <td className="th" style={{ verticalAlign: 'middle' }}>{gameTime}</td>
+                  <td className="th">{gameTime}</td>
                   {isLeagueGame &&
                     Array.from([awayTeam, homeTeam]).map((team, i) => {
                       const isResponsible = !winner && (team?.id === bringBaseId || team?.id === takeBaseId)
-                      const teamName = team?.name.toLowerCase()
-                      const classNames = [teamName].filter(Boolean).join(' ')
+                      const teamName = team?.name as string
+                      // const classNames = [teamName].filter(Boolean).join(' ')
                       return (
-                        <td key={`team-${i}`} className={classNames} style={{ verticalAlign: 'middle' }}>
-                          {team?.name + ' '}
+                        <td key={`team-${i}`} className={teamName?.toLowerCase()}>
+                          {teamName}
+                          {' '}
                           {isResponsible && <BsXDiamondFill size={12} />}
                           {getResult(winner, i)}
                         </td>
                       )
                     })}
                   {!isLeagueGame && (
-                    <td className={`exhibition-${i % 2}`} colSpan={2} style={{ verticalAlign: 'middle' }}>
+                    <td className={`exhibition-${i % 2}`} colSpan={2}>
                       {game.title}
                     </td>
                   )}

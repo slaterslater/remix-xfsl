@@ -1,6 +1,6 @@
 import type { LoaderFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { useLoaderData } from '@remix-run/react'
+import { Outlet, useLoaderData } from '@remix-run/react'
 
 import { db } from '~/utils/db.server'
 import GameTable from '~/components/GameTable'
@@ -42,17 +42,18 @@ export const loader: LoaderFunction = async () => {
       },
     }),
   }
-  return json(data)
+  return json({ weeks: data.weeks })
 }
 
 export default function ScheduleIndexRoute() {
-  const data = useLoaderData<LoaderData>()
+  const { weeks } = useLoaderData<LoaderData>()
   return (
     <main>
       <h2>{`XFSL Season ${new Date().getFullYear()}`}</h2>
-      {data.weeks.map((week, i) => (
+      {weeks.map((week, i) => (
         <GameTable key={week.id} week={week} index={i} />
       ))}
+      <Outlet />
     </main>
   )
 }

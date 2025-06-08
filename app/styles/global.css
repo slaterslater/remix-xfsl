@@ -539,6 +539,11 @@ td {
   padding: 5px;
 }
 
+td a {
+  display: block;
+  width: 100%;
+}
+
 .schedule-placeholder {
   display: flex;
   justify-content: flex-end;
@@ -569,4 +574,27 @@ footer {
 .pts {
   font-size: 0.60rem;
   padding-bottom: 5px;
+}
+
+
+
+#team-games tr {
+  display: grid;
+  grid-template-columns: 60px 20px 1fr 60px;
+}
+
+
+
+#team-games tr td {
+  max-width: 100%;
+  font-size: small;
+}
+
+
+#team-games tr td:nth-child(1) {
+  width: 60px;
+}
+
+#team-games tr td:nth-child(3) {
+  font-size: medium;
 }

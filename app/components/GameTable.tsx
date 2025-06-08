@@ -5,6 +5,7 @@ import { BsCloudRain, BsXDiamondFill } from 'react-icons/bs'
 import { MdOutlinePlusOne, MdOutlineExposurePlus2 } from "react-icons/md"
 import type { IconType } from 'react-icons'
 import { dateFormat, gameDayFormat, timeFormat } from '~/lib/datetime'
+import { Link } from '@remix-run/react'
 
 type Game = {
   awayTeam: Team | null
@@ -71,10 +72,12 @@ export default function GameTable({ week, index = 0, isHomePage = false }: Props
                       // const classNames = [teamName].filter(Boolean).join(' ')
                       return (
                         <td key={`team-${i}`} className={teamName?.toLowerCase()}>
-                          {teamName}
-                          {' '}
-                          {isResponsible && <BsXDiamondFill size={12} />}
-                          {getResult(winner, i)}
+                          <Link to={`/schedule/${team?.id}`}>
+                            {teamName}
+                            {' '}
+                            {isResponsible && <BsXDiamondFill size={12} />}
+                            {getResult(winner, i)}
+                          </Link>
                         </td>
                       )
                     })}

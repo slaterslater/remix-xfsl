@@ -20,6 +20,7 @@ model Team {
   id         String   @id @default(dbgenerated("gen_random_uuid()"))
   name       String   @unique
   isActive   Boolean? @default(false)
+  fullname   String
   awayGames  Game[]   @relation("awayTeam")
   homeGames  Game[]   @relation("homeTeam")
   bringBases Week[]   @relation("bringBase")

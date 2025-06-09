@@ -596,7 +596,7 @@ footer {
   text-align: right;
 }
 
-#team-games tr td:nth-child(3) {
+#team-games tr td:nth-child(4) {
   font-size: medium;
   max-width: 200px;
 }

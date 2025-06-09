@@ -3,6 +3,7 @@ import { json } from '@remix-run/node'
 import { Link, useLoaderData } from '@remix-run/react'
 import dayjs from 'dayjs'
 import { BsCloudRain } from 'react-icons/bs'
+import { timeFormat } from '~/lib/datetime'
 import { db } from '~/utils/db.server'
 
 export const loader: LoaderFunction = async ({ params }) => {
@@ -47,7 +48,7 @@ export default function TeamRoute() {
                     return (
                         <tr key={game.id}>
                             <td className='th'>{dayjs(game.time).format('MMM D')}</td>
-                            <td>{isHomeGame ? 'vs' : '@'}</td>
+                            <td>{timeFormat(game.time)} {isHomeGame ? 'vs' : '@'}</td>
                             <td className={opponent.name.toLowerCase()}><Link to={`/schedule/${opponent.id}`}>{opponent.name}</Link></td>
                             <td>{getResult(game.winner, isHomeGame)}</td>
                         </tr>

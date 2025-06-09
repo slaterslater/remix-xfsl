@@ -53,7 +53,6 @@ export default function ScheduleIndexRoute() {
       {weeks.map((week, i) => (
         <GameTable key={week.id} week={week} index={i} />
       ))}
-      <Outlet />
     </main>
   )
 }

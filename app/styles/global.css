@@ -579,8 +579,8 @@ footer {
 
 
 #team-games tr {
-  display: grid;
-  grid-template-columns: 60px 20px 1fr 60px;
+  /* display: grid; */
+  /* grid-template-columns: 70px 30px 200px 60px; */
 }
 
 
@@ -592,9 +592,11 @@ footer {
 
 
 #team-games tr td:nth-child(1) {
-  width: 60px;
+  width: 70px;
+  text-align: right;
 }
 
 #team-games tr td:nth-child(3) {
   font-size: medium;
+  max-width: 200px;
 }

@@ -1,4 +1,5 @@
 import type { Team } from '@prisma/client'
+import { Link } from '@remix-run/react'
 import { useMemo } from 'react'
 
 type Props = {
@@ -137,7 +138,8 @@ export default function Standings({ teams, games }: Props) {
                 {rank + 1}
                 <sup>{suffix[rank] || 'th'}</sup>
               </td>
-              <td>{name}</td>
+
+              <td><Link to={`/schedule/${id}`}>{name}</Link></td>
               {/* <td>{gp}</td> */}
               <td>{wins.length}</td>
               <td>{loss.length}</td>

@@ -535,11 +535,13 @@ th {
 }
 
 td {
-  max-width: 50%;
-  width: 100%;
-  /* max-width: 190px; */
   padding: 5px;
   box-sizing: border-box;
+}
+
+.team {
+  max-width: 50%;
+  width: 100%;
 }
 
 td a {

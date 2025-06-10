@@ -70,9 +70,9 @@ export default function GameTable({ week, index = 0, isHomePage = false }: Props
                     Array.from([awayTeam, homeTeam]).map((team, i) => {
                       const isResponsible = !winner && (team?.id === bringBaseId || team?.id === takeBaseId)
                       const teamName = team?.name as string
-                      // const classNames = [teamName].filter(Boolean).join(' ')
+                      const classNames = `${teamName?.toLowerCase()} team`
                       return (
-                        <td key={`team-${i}`} className={teamName?.toLowerCase()}>
+                        <td key={`team-${i}`} className={classNames}>
                           <Link to={`/schedule/${team?.id}`}>
                             {teamName}
                             {' '}

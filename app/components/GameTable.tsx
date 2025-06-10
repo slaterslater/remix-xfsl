@@ -62,6 +62,7 @@ export default function GameTable({ week, index = 0, isHomePage = false }: Props
               const { id: gameId, time, awayTeam, homeTeam, gameType, winner } = game
               const gameTime = timeFormat(time)
               const isLeagueGame = gameType !== 'EXHIBITION'
+              if (isLeagueGame && !awayTeam && !homeTeam) return null
               return (
                 <tr key={gameId}>
                   <td className="th">{gameTime}</td>

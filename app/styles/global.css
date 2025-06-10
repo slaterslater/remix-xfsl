@@ -536,12 +536,16 @@ th {
 
 td {
   max-width: 50%;
+  width: 100%;
+  /* max-width: 190px; */
   padding: 5px;
+  box-sizing: border-box;
 }
 
 td a {
   display: block;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .schedule-placeholder {
@@ -575,15 +579,6 @@ footer {
   font-size: 0.60rem;
   padding-bottom: 5px;
 }
-
-
-
-#team-games tr {
-  /* display: grid; */
-  /* grid-template-columns: 70px 30px 200px 60px; */
-}
-
-
 
 #team-games tr td {
   max-width: 100%;

@@ -540,8 +540,8 @@ td {
 }
 
 .team {
-  max-width: 50%;
-  width: 100%;
+  /* max-width: 50%; */
+  width: 50%;
 }
 
 td a {

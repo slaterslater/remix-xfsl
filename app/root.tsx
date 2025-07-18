@@ -26,6 +26,29 @@ export default function App() {
         <Links />
       </head>
       <body>
+        {process.env.NODE_ENV !== "development" && (
+          <>
+            <script
+              async
+              src={`https://www.googletagmanager.com/gtag/js?id=G-SFQRLSW05W`}
+            />
+            <script
+              async
+              id="gtag-init"
+              dangerouslySetInnerHTML={{
+                __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+
+                gtag('config', 'G-SFQRLSW05W', {
+                  page_path: window.location.pathname,
+                });
+              `,
+              }}
+            />
+          </>
+        )}
         <Header />
         <Outlet />
         <ScrollRestoration />

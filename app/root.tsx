@@ -4,6 +4,7 @@ import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '@re
 import globalStylesUrl from '~/styles/global.css'
 import Footer from './components/Footer'
 import Header from './components/Header'
+import ScrollUp from './components/ScrollUp'
 
 export const links: LinksFunction = () => [
   {
@@ -55,6 +56,7 @@ export default function App() {
         <Scripts />
         <LiveReload />
         <Footer />
+        <ScrollUp />
       </body>
     </html>
   )

@@ -597,3 +597,36 @@ footer {
   font-size: medium;
   max-width: 200px;
 }
+
+/* scroll up */
+#scroll-up {
+  --size: 40px;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 9999;
+  width: var(--size);
+  height: var(--size);
+  min-width: var(--size);
+  min-height: var(--size);
+  max-width: 48px;
+  max-height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--slate);
+  color: var(--grey);
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  opacity: 0.9;
+  transition: opacity 0.2s, background 0.2s;
+  font-size: 1.5rem;
+  padding: 0;
+}
+
+#scroll-up:hover {
+  opacity: 1;
+  background-color: var(--darkgrey);
+}

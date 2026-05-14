@@ -17,65 +17,72 @@ type LoaderData = {
 }
 
 export const loader: LoaderFunction = async () => {
+
+
   const date = new Date()
   const day = date.getDay()
   date.setDate(date.getDate() - (day || 0))
 
-  const data: LoaderData = {
-    teams: await db.team.findMany({
-      where: { isActive: true },
-    }),
-    week: await db.week.findFirst({
-      orderBy: {
-        date: 'asc',
-      },
-      where: {
-        date: {
-          gte: date,
-        },
-      },
-      include: {
-        games: {
-          orderBy: {
-            time: 'asc',
-          },
-          include: {
-            homeTeam: true,
-            awayTeam: true,
-          },
-        },
-      },
-    }),
-    playedGames: await db.game.findMany({
-      select: {
-        winner: true,
-        time: true,
-        awayTeam: true,
-        homeTeam: true,
-      },
-      where: {
-        AND: [
-          { gameType: 'REGULAR' },
-          {
-            winner: {
-              not: '',
-            },
-          },
-          {
-            time: {
-              gt: jan1,
-            },
-          },
-        ],
-      },
-    }),
-  }
+  // const data: LoaderData = {
+  //   teams: await db.team.findMany({
+  //     where: { isActive: true },
+  //   }),
+  //   week: await db.week.findFirst({
+  //     orderBy: {
+  //       date: 'asc',
+  //     },
+  //     where: {
+  //       date: {
+  //         gte: date,
+  //       },
+  //     },
+  //     include: {
+  //       games: {
+  //         orderBy: {
+  //           time: 'asc',
+  //         },
+  //         include: {
+  //           homeTeam: true,
+  //           awayTeam: true,
+  //         },
+  //       },
+  //     },
+  //   }),
+  //   playedGames: await db.game.findMany({
+  //     select: {
+  //       winner: true,
+  //       time: true,
+  //       awayTeam: true,
+  //       homeTeam: true,
+  //     },
+  //     where: {
+  //       AND: [
+  //         { gameType: 'REGULAR' },
+  //         {
+  //           winner: {
+  //             not: '',
+  //           },
+  //         },
+  //         {
+  //           time: {
+  //             gt: jan1,
+  //           },
+  //         },
+  //       ],
+  //     },
+  //   }),
+  // }
 
-  return json(data)
+  // return json(data)
+  // return json({})
+  return null
 }
 
 export default function IndexRoute() {
   const data = useLoaderData<LoaderData>()
+
+  if (!data) return null
+
   const date = dateFormat(data.week?.date)
   const { teams, week, playedGames } = data
 

@@ -12,9 +12,12 @@ export default function Header() {
             {/* <Link className="heading-font" to="/">
               This Week
             </Link> */}
-            <Link className="heading-font" to="/schedule">
+            {/* <Link className="heading-font" to="/schedule">
               Schedule
-            </Link>
+            </Link> */}
+            <a href="/XFSL-2026-Schedule-and-Rules.pdf" target="_blank">
+              Schedule
+            </a>
           </li>
           <li>
             <Link to="/">
@@ -22,7 +25,7 @@ export default function Header() {
             </Link>
           </li>
           <li>
-            <a href="/XFSL-2025-Schedule-and-Rules.pdf" target="_blank">
+            <a href="/XFSL-2026-Schedule-and-Rules.pdf#page=3" target="_blank">
               Rules
             </a>
           </li>

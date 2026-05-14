@@ -8,8 +8,11 @@
     "seed": "node --require esbuild-register prisma/seed.ts"
   },
   "scripts": {
+    "prebuild": "node scripts/copy-schedule-pdf.js",
     "build": "prisma generate && remix build",
+    "predev": "node scripts/copy-schedule-pdf.js",
     "dev": "cross-env NODE_ENV=development netlify dev",
+    "prestart": "node scripts/copy-schedule-pdf.js",
     "start": "cross-env NODE_ENV=production netlify dev"
   },
   "dependencies": {

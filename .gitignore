@@ -12,3 +12,6 @@ node_modules
 /public/.DS_Store
 
 /.cursor
+
+# Generated from assets/ by scripts/copy-schedule-pdf.js
+/public/XFSL-2025-Schedule-and-Rules.pdf

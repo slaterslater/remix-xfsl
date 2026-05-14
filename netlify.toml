@@ -1,6 +1,9 @@
 [build]
-  command = "prisma generate && remix build"
+  command = "npm run build"
   publish = "public"
+
+[build.environment]
+  NODE_VERSION = "20"
 
 [dev]
   command = "remix watch"

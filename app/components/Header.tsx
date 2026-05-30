@@ -12,12 +12,12 @@ export default function Header() {
             {/* <Link className="heading-font" to="/">
               This Week
             </Link> */}
-            {/* <Link className="heading-font" to="/schedule">
+            <Link className="heading-font" to="/schedule">
               Schedule
-            </Link> */}
-            <a href="/XFSL-2026-Schedule-and-Rules.pdf" target="_blank">
+            </Link>
+            {/* <a href="/XFSL-2026-Schedule-and-Rules.pdf" target="_blank">
               Schedule
-            </a>
+            </a> */}
           </li>
           <li>
             <Link to="/">

@@ -60,9 +60,8 @@ export default function AdminIndexRoute() {
               {null}
             </option>
             {data.weeks?.map((week) => (
-              <option key={week.id} value={week.id}>{`${dateFormat(week.date)} ${
-                isCurrent(week.date) ? '*****' : ''
-              }`}</option>
+              <option key={week.id} value={week.id}>{`${dateFormat(week.date)} ${isCurrent(week.date) ? '*****' : ''
+                }`}</option>
             ))}
           </select>
         </div>

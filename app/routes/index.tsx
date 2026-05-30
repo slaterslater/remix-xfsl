@@ -23,59 +23,59 @@ export const loader: LoaderFunction = async () => {
   const day = date.getDay()
   date.setDate(date.getDate() - (day || 0))
 
-  // const data: LoaderData = {
-  //   teams: await db.team.findMany({
-  //     where: { isActive: true },
-  //   }),
-  //   week: await db.week.findFirst({
-  //     orderBy: {
-  //       date: 'asc',
-  //     },
-  //     where: {
-  //       date: {
-  //         gte: date,
-  //       },
-  //     },
-  //     include: {
-  //       games: {
-  //         orderBy: {
-  //           time: 'asc',
-  //         },
-  //         include: {
-  //           homeTeam: true,
-  //           awayTeam: true,
-  //         },
-  //       },
-  //     },
-  //   }),
-  //   playedGames: await db.game.findMany({
-  //     select: {
-  //       winner: true,
-  //       time: true,
-  //       awayTeam: true,
-  //       homeTeam: true,
-  //     },
-  //     where: {
-  //       AND: [
-  //         { gameType: 'REGULAR' },
-  //         {
-  //           winner: {
-  //             not: '',
-  //           },
-  //         },
-  //         {
-  //           time: {
-  //             gt: jan1,
-  //           },
-  //         },
-  //       ],
-  //     },
-  //   }),
-  // }
+  const data: LoaderData = {
+    teams: await db.team.findMany({
+      where: { isActive: true },
+    }),
+    week: await db.week.findFirst({
+      orderBy: {
+        date: 'asc',
+      },
+      where: {
+        date: {
+          gte: date,
+        },
+      },
+      include: {
+        games: {
+          orderBy: {
+            time: 'asc',
+          },
+          include: {
+            homeTeam: true,
+            awayTeam: true,
+          },
+        },
+      },
+    }),
+    playedGames: await db.game.findMany({
+      select: {
+        winner: true,
+        time: true,
+        awayTeam: true,
+        homeTeam: true,
+      },
+      where: {
+        AND: [
+          { gameType: 'REGULAR' },
+          {
+            winner: {
+              not: '',
+            },
+          },
+          {
+            time: {
+              gt: jan1,
+            },
+          },
+        ],
+      },
+    }),
+  }
 
-  // return json(data)
+  return json(data)
   // return json({})
-  return null
+  // return null
 }
 
 export default function IndexRoute() {

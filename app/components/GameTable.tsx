@@ -73,7 +73,7 @@ export default function GameTable({ week, index = 0, isHomePage = false }: Props
                       const classNames = `${teamName?.toLowerCase()} team`
                       return (
                         <td key={`team-${i}`} className={classNames}>
-                          <Link to={`/schedule/${team?.id}`}>
+                          <Link to={`/schedule/${teamName.toLowerCase()}`}>
                             {teamName}
                             {' '}
                             {isResponsible && <BsXDiamondFill size={12} />}

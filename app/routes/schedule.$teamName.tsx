@@ -7,16 +7,16 @@ import { timeFormat } from '~/lib/datetime'
 import { db } from '~/utils/db.server'
 
 export const loader: LoaderFunction = async ({ params }) => {
-    const { teamId } = params
-    if (!teamId) {
+    const { teamName } = params
+    if (!teamName) {
         throw new Response('Team not specified', { status: 400 })
     }
 
     const games = await db.game.findMany({
         where: {
             OR: [
-                { homeTeam: { id: teamId } },
-                { awayTeam: { id: teamId } },
+                { homeTeam: { name: { equals: teamName, mode: 'insensitive' } } },
+                { awayTeam: { name: { equals: teamName, mode: 'insensitive' } } },
             ],
         },
         include: {
@@ -26,8 +26,13 @@ export const loader: LoaderFunction = async ({ params }) => {
         },
         orderBy: { time: 'asc' },
     })
-    const team = await db.team.findUnique({
-        where: { id: teamId },
+    const team = await db.team.findFirst({
+        where: {
+            name: {
+                equals: teamName,
+                mode: 'insensitive',
+            },
+        },
     })
     // if (games.length === 0) {
     //     // return redirect('/schedule')
@@ -37,6 +42,8 @@ export const loader: LoaderFunction = async ({ params }) => {
 
 export default function TeamRoute() {
     const { team, games } = useLoaderData<typeof loader>()
+
+    console.log(team, games)
     return (
         <main>
             <h2>{`XFSL Season ${new Date().getFullYear()}`}</h2>
@@ -45,11 +52,12 @@ export default function TeamRoute() {
                 {games.map(game => {
                     const isHomeGame = game.homeTeam.id === team.id
                     const opponent = [game.awayTeam, game.homeTeam].filter(({ id }) => id !== team.id)[0]
+                    const opponentName = opponent.name.toLowerCase()
                     return (
                         <tr key={game.id}>
                             <td className='th'>{dayjs(game.time).format('MMM D')}</td>
                             <td>{timeFormat(game.time)} {isHomeGame ? 'vs' : '@'}</td>
-                            <td className={opponent.name.toLowerCase()}><Link to={`/schedule/${opponent.id}`}>{opponent.name}</Link></td>
+                            <td className={opponentName}><Link to={`/schedule/${opponentName}`}>{opponent.name}</Link></td>
                             <td>{getResult(game.winner, isHomeGame)}</td>
                         </tr>
                     )

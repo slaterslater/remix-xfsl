@@ -139,7 +139,7 @@ export default function Standings({ teams, games }: Props) {
                 <sup>{suffix[rank] || 'th'}</sup>
               </td>
 
-              <td><Link to={`/schedule/${id}`}>{name}</Link></td>
+              <td><Link to={`/schedule/${name.toLowerCase()}`}>{name}</Link></td>
               {/* <td>{gp}</td> */}
               <td>{wins.length}</td>
               <td>{loss.length}</td>

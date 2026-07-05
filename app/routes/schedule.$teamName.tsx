@@ -42,8 +42,6 @@ export const loader: LoaderFunction = async ({ params }) => {
 
 export default function TeamRoute() {
     const { team, games } = useLoaderData<typeof loader>()
-
-    console.log(team, games)
     return (
         <main>
             <h2>{`XFSL Season ${new Date().getFullYear()}`}</h2>
@@ -68,7 +66,6 @@ export default function TeamRoute() {
 }
 
 function getResult(winner: string | null, isHomeGame: boolean) {
-    console.log(winner, isHomeGame)
     if (!winner) return null
     if (winner === 'tie') return 'T'
     if (winner === 'np') return <BsCloudRain size={12} />
